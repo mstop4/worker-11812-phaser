@@ -2,9 +2,9 @@ import 'phaser';
 
 export class SimpleScene extends Phaser.Scene {
   preload() {
-    this.load.image('sky', 'img/space3.png');
-    this.load.image('logo', 'img/phaser3-logo.png');
-    this.load.image('red', 'img/red.png');
+    this.load.image('sky', 'assets/sprites/space3.png');
+    this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+    this.load.image('red', 'assets/sprites/red.png');
   }
 
   create() {
@@ -18,11 +18,11 @@ export class SimpleScene extends Phaser.Scene {
       blendMode: 'ADD'
     });
 
-    const logo = this.physics.add.image(400, 100, 'logo');
+    const logo = this.add.image(400, 100, 'logo');
 
-    logo.setVelocity(100, 200);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
+    //logo.setVelocity(100, 200);
+    //logo.setBounce(1, 1);
+    //logo.setCollideWorldBounds(true);
 
     emitter.startFollow(logo);
   }

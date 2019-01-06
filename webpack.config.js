@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const CopyWebPackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -44,7 +45,12 @@ module.exports = {
       'WEBGL_RENDERER': JSON.stringify(true)
     }),
 
-    new CopyWebPackPlugin([{ from: './src/img', to: 'img'}])
+    new CopyWebPackPlugin([
+      { from: './src/assets/sprites', to: 'assets/sprites'},
+      { from: './src/index.html', to: 'index.html'}
+    ]),
+
+    new CleanWebpackPlugin(['build'], {})
   ],
 
   devServer: {
