@@ -1,18 +1,13 @@
 import 'phaser';
 
-import { SimpleScene } from './scenes/simple-scene';
+import { scnMain } from './scenes/scnMain';
+import * as gameConfig from './gameConfig.js';
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 200 }
-    }
-  },
-  scene: SimpleScene
+  width: gameConfig.appWidth,
+  height: gameConfig.appHeight,
+  scene: scnMain
 };
 
 new Phaser.Game(config);

@@ -10,8 +10,8 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: './build',
+    path: path.resolve(__dirname, 'dist/'),
+    publicPath: '/dist/',
     filename: 'bundle.js'
   },
 
@@ -40,7 +40,10 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(['build'], {}),
+    new CleanWebpackPlugin(['build', 'dist'], {
+      watch: false,
+      beforeEmit: true
+    }),
 
     new webpack.DefinePlugin({
       'CANVAS_RENDERER': JSON.stringify(true),
@@ -54,6 +57,8 @@ module.exports = {
   ],
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'build')
+    contentBase: '/dist/',
+    index: 'index.js',
+    port: 3000,
   }
 };
