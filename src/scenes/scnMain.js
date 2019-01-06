@@ -3,12 +3,16 @@ import * as gameConfig from '../gameConfig.js';
 
 export class scnMain extends Phaser.Scene {
 
-  hourHand = null;
-  minuteHand = null;
-  secondHand = null;
+  static screenCenter = { 
+    x: gameConfig.appWidth / 2,
+    y: gameConfig.appHeight / 2
+  }
 
   constructor() {
     super();
+    this.hourHand = null;
+    this.minuteHand = null;
+    this.secondHand = null;
   }
 
   preload = () => {
@@ -18,7 +22,7 @@ export class scnMain extends Phaser.Scene {
   }
 
   create = () => {
-    this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'sky');
+    this.add.image(scnMain.screenCenter.x, scnMain.screenCenter.y, 'sky');
 
     const lights = this.add.group();
 
@@ -27,24 +31,28 @@ export class scnMain extends Phaser.Scene {
       const _x = Math.cos(_rad) * gameConfig.clockRadius;
       const _y = -Math.sin(_rad) * gameConfig.clockRadius;
 
-      lights.create(gameConfig.appWidth/2 + _x, gameConfig.appHeight/2 + _y, 'light');
+      lights.create(scnMain.screenCenter.x + _x, scnMain.screenCenter.y + _y, 'light');
     }
 
-    this.hourHand = this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'hand');
-    this.hourHand.setOrigin(0.5, 1);
+    this.hourHand = this.add.image(scnMain.screenCenter.x, scnMain.screenCenter.y, 'hand');
+    this.hourHand.setOrigin(0, 0.5);
 
-    this.minuteHand = this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'hand');
-    this.minuteHand.setOrigin(0.5, 1);
+    this.minuteHand = this.add.image(scnMain.screenCenter.x, scnMain.screenCenter.y, 'hand');
+    this.minuteHand.setOrigin(0, 0.5);
     this.minuteHand.angle = 180;
 
-    this.secondHand = this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'hand');
-    this.secondHand.setOrigin(0.5, 1);
+    this.secondHand = this.add.image(scnMain.screenCenter.x, scnMain.screenCenter.y, 'hand');
+    this.secondHand.setOrigin(0, 0.5);
     this.secondHand.angle = 90;
   }
 
   update = () => {
     this.hourHand.angle += 0.1;
     this.minuteHand.angle += 0.1;
-    this.secondHand.angle += 0.1;
+
+    const mouseX = this.input.x;
+    const mouseY = this.input.y;
+
+    this.secondHand.angle = Math.atan2(mouseY-scnMain.screenCenter.y, mouseX-scnMain.screenCenter.x) * (180 / Math.PI);
   }
 }
