@@ -1,4 +1,6 @@
 module.exports = {
-  appWidth: 640,
-  appHeight: 360
+  appWidth: 1280,
+  appHeight: 720,
+
+  clockRadius: 300
 };
