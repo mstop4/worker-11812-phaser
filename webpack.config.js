@@ -40,6 +40,8 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(['build'], {}),
+
     new webpack.DefinePlugin({
       'CANVAS_RENDERER': JSON.stringify(true),
       'WEBGL_RENDERER': JSON.stringify(true)
@@ -49,8 +51,6 @@ module.exports = {
       { from: './src/assets/sprites', to: 'assets/sprites'},
       { from: './src/index.html', to: 'index.html'}
     ]),
-
-    new CleanWebpackPlugin(['build'], {})
   ],
 
   devServer: {

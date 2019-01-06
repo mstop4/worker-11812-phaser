@@ -7,8 +7,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "webpack --mode=development",
-    "start": "npm run build && webpack-dev-server --port=3000"
+    "build": "webpack --mode=production",
+    "start": "webpack-dev-server --port=3000"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
