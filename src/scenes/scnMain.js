@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 import * as gameConfig from '../gameConfig.js';
 
 export class scnMain extends Phaser.Scene {

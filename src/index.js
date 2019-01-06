@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 
 import { scnMain } from './scenes/scnMain';
 import * as gameConfig from './gameConfig.js';

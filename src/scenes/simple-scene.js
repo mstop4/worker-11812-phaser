@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 
 export class SimpleScene extends Phaser.Scene {
   preload() {
