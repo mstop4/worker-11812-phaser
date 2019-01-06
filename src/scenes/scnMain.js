@@ -2,12 +2,21 @@ import Phaser from 'phaser';
 import * as gameConfig from '../gameConfig.js';
 
 export class scnMain extends Phaser.Scene {
-  preload() {
-    this.load.image('sky', 'assets/sprites/space3.png');
-    this.load.image('red', 'assets/sprites/red.png');
+
+  hourHand = null;
+  minuteHand = null;
+
+  constructor() {
+    super();
   }
 
-  create() {
+  preload = () => {
+    this.load.image('sky', 'assets/sprites/space3.png');
+    this.load.image('red', 'assets/sprites/red.png');
+    this.load.image('hand', 'assets/sprites/hand1.png');
+  }
+
+  create = () => {
     this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'sky');
 
     const lights = this.add.group();
@@ -19,5 +28,17 @@ export class scnMain extends Phaser.Scene {
 
       lights.create(gameConfig.appWidth/2 + _x, gameConfig.appHeight/2 + _y, 'red');
     }
+
+    this.hourHand = this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'hand');
+    this.hourHand.setOrigin(0.5, 1);
+
+    this.minuteHand = this.add.image(gameConfig.appWidth/2, gameConfig.appHeight/2, 'hand');
+    this.minuteHand.setOrigin(0.5, 1);
+    this.minuteHand.angle = 180;
+  }
+
+  update = () => {
+    this.hourHand.angle += 0.1;
+    this.minuteHand.angle += 0.1;
   }
 }
