@@ -1,18 +1,16 @@
 const pointLineDist = (aX, aY, bX, bY, pX, pY) => {
   const nX = bX - aX;
   const nY = bY - aY;
-  const paX = aX - pX;
-  const paY = aY - pY;
+  const paX = pX - aX;
+  const paY = pY - aY;
 
   const dot_pan = dot2D(paX, paY, nX, nY);
-  const dot_nn = dot2D(nX, nY, nX, nY);
+  const len_sq = dot2D(nX, nY, nX, nY);
 
-  const cX = nX * (dot_pan / dot_nn);
-  const cY = nY * (dot_pan / dot_nn);
-  
-  const dX = paX - cX;
-  const dY = paY - cY;
+  const q = len_sq !== 0 ? Math.max(Math.min(dot_pan / len_sq, 1), 0) : 0;
 
+  const dX = pX - (aX + q * nX);
+  const dY = pY - (aY + q * nY);
   return Math.sqrt(dot2D(dX, dY, dX, dY));
 };
 
