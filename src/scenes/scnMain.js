@@ -16,7 +16,8 @@ export class scnMain extends Phaser.Scene {
 
   preload = () => {
     this.load.image('sky', 'assets/sprites/space3.png');
-    this.load.image('light', 'assets/sprites/light.png');
+    this.load.image('lightOff', 'assets/sprites/lightOff.png');
+    this.load.image('lightOn', 'assets/sprites/lightOn.png');
     this.load.image('hand', 'assets/sprites/hand1.png');
   }
 
