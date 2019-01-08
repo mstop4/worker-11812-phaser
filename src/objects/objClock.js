@@ -1,21 +1,33 @@
 import { pointLineDist } from '../helpers/geometry'; 
 
+const clickRadius = 32;
+const lightRadius = 300;
+const labelRadius = 340;
+
 export class objClock {
+  constructor(game, x, y) {
+    this.x = x;
+    this.y = y;
 
-  static clickRadius = 32;
+    // Lights
 
-  constructor(game, x, y, radius) {
+    this.lightStates = [];
+    this.lightLabels = [];
     this.lights = game.add.group();
 
     for (let i=0; i<45; i++) {
       const _rad = (90-i*8) * (Math.PI / 180); 
-      const _offset_x = Math.cos(_rad) * radius;
-      const _offset_y = -Math.sin(_rad) * radius;
+      const _offset_x = Math.cos(_rad) * lightRadius;
+      const _offset_y = -Math.sin(_rad) * lightRadius;
 
       this.lights.create(x + _offset_x, y + _offset_y, 'lightOff');
+      this.lightStates[i] = 0;
     }
 
     this.lights.children.entries[0].setTexture('lightOn');
+    //console.log(this.lightLabels);
+
+    // Hands
 
     this.handSelected = -1;
     this.handAngles = [0, 90, 180];
@@ -39,7 +51,7 @@ export class objClock {
 
       const _minDist = Math.min(..._handsDist);
 
-      if (_minDist <= objClock.clickRadius) {
+      if (_minDist <= clickRadius) {
         this.handSelected = _handsDist.indexOf(_minDist);
       }
       else {
@@ -60,5 +72,35 @@ export class objClock {
   }
 
   update = () => {
+  }
+
+  createLabels = (game) => {
+    for (let i=0; i<46; i++) {
+      const _rad = (90-i*360/46) * (Math.PI / 180); 
+      const _offset_x = Math.cos(_rad) * labelRadius;
+      const _offset_y = -Math.sin(_rad) * labelRadius;
+      let text;
+
+      switch (i) {
+      case 0:
+        text = 'II';
+        break;
+      case 1:
+        text = 'III';
+        break;
+      case 45:
+        text = 'I';
+        break;
+      default:
+        text = i-1;
+      }
+
+      this.lightLabels[i] = game.add.text(this.x + _offset_x, this.y + _offset_y, text, {
+        fontFamily: 'Amarante',
+        fontSize: '24px', 
+        fill: '#FFF'
+      });
+      this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/46);
+    }
   }
 }
