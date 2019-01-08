@@ -15,12 +15,13 @@ export class objClock {
     this.lightLabels = [];
     this.lights = game.add.group();
 
-    for (let i=0; i<45; i++) {
-      const _rad = (90-i*8) * (Math.PI / 180); 
+    for (let i=0; i<46; i++) {
+      const _rad = (90-i*360/46) * (Math.PI / 180); 
       const _offset_x = Math.cos(_rad) * lightRadius;
       const _offset_y = -Math.sin(_rad) * lightRadius;
 
-      this.lights.create(x + _offset_x, y + _offset_y, 'lightOff');
+      const _light = this.lights.create(x + _offset_x, y + _offset_y, 'lightOff');
+      _light.angle = i*360/46;
       this.lightStates[i] = 0;
     }
 
