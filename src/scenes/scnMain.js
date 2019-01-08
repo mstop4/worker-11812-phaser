@@ -15,15 +15,16 @@ export class scnMain extends Phaser.Scene {
   }
 
   preload = () => {
-    this.load.image('sky', 'assets/sprites/space3.png');
+    this.load.image('back', 'assets/sprites/back.png');
     this.load.image('lightOff', 'assets/sprites/lightOff.png');
     this.load.image('lightOn', 'assets/sprites/lightOn.png');
     this.load.image('hand', 'assets/sprites/hand1.png');
+    this.load.image('cap', 'assets/sprites/cap.png');
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
   }
 
   create = () => {
-    this.add.image(scnMain.center.x, scnMain.center.y, 'sky');
+    this.add.image(scnMain.center.x, scnMain.center.y, 'back');
     this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
 
     WebFont.load({

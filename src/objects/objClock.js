@@ -1,8 +1,8 @@
 import { pointLineDist } from '../helpers/geometry'; 
 
 const clickRadius = 32;
-const lightRadius = 300;
-const labelRadius = 340;
+const lightRadius = 310;
+const labelRadius = 345;
 
 export class objClock {
   constructor(game, x, y) {
@@ -25,8 +25,7 @@ export class objClock {
       this.lightStates[i] = 0;
     }
 
-    this.lights.children.entries[0].setTexture('lightOn');
-    //console.log(this.lightLabels);
+    //this.lights.children.entries[0].setTexture('lightOn');
 
     // Hands
 
@@ -36,9 +35,12 @@ export class objClock {
 
     for (var i=0; i<3; i++) {
       this.hands[i] = game.add.image(x, y, 'hand');
-      this.hands[i].setOrigin(0, 0.5);
+      this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
     }
+
+    game.add.image(x, y, 'cap');
+    game.children.bringToTop(this.hands[2]);
 
     game.input.on('pointerdown', (pointer) => {
       // Find and select closest hand
@@ -99,7 +101,7 @@ export class objClock {
       this.lightLabels[i] = game.add.text(this.x + _offset_x, this.y + _offset_y, text, {
         fontFamily: 'Amarante',
         fontSize: '24px', 
-        fill: '#FFF'
+        fill: '#000'
       });
       this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/46);
     }
