@@ -34,9 +34,11 @@ export class objClock {
     });
 
     this.lightStates = [];
-    this.lightTimers = [];
+    this.lightShutoffTimers = [];
+    this.lightCriticalTimers = [];
     this.lightLabels = [];
     this.lightShutoffTime = 30;
+    this.lightCriticalTime = 60;
     this.lights = this.game.add.group();
 
     for (let i=0; i<numLights; i++) {
@@ -46,13 +48,15 @@ export class objClock {
 
       const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'lightOff');
       _light.angle = i*360/numLights;
+
       this.lightStates[i] = 0;
-      this.lightTimers[i] = -1;
+      this.lightShutoffTimers[i] = -1;
+      this.lightCriticalTimers[i] = -1;
     }
 
     setTimeout(() => {
-      this.toggleLight(37, 1);
-    }, 1000);
+      this.toggleLight(intRandomRange(0, numLights-1), 1);
+    }, 500 + intRandomRange(0, 500));
   }
 
   createHands = () => {
@@ -142,44 +146,58 @@ export class objClock {
 
       switch (state) {
 
-      case 0:
-        this.lights.getFirstNth(index+1, true).setTexture('lightOff');
-        this.lightTimers[index] = -1;
+      case 0: {
+        const _light = this.lights.getFirstNth(index+1, true);
+        _light.setTexture('lightOff');
+        _light.anims.stop(null, true);
+        this.lightShutoffTimers[index] = -1;
+        this.lightCriticalTimers[index] = -1;
         break;
+      }
 
-      case 1:
+      case 1: {
         this.lights.getFirstNth(index+1, true).setTexture('lightOn');
-        this.lightTimers[index] = this.lightShutoffTime;
+        this.lightShutoffTimers[index] = this.lightShutoffTime;
+        this.lightCriticalTimers[index] = this.lightCriticalTime;
         break;
+      }
 
-      case 2:
+      case 2: {
         this.lights.getFirstNth(index+1, true).play('flash', true);
         break;
+      }
       }
     }
   }
 
   checkHands = () => {
     for (let i=0; i<numLights; i++) {
-      if (this.lightStates[i] !== 0) {
-        const _curAngle = (270+i*360/numLights) % 360;
+      if (this.lightStates[i] === 0) continue;
 
-        for (let j=0; j<numHands; j++) {
-          if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= handPointingThreshold) {
-            this.lightTimers[i]--;
+      if (this.lightStates[i] === 1) {
+        this.lightCriticalTimers[i]--;
+        
+        if (this.lightCriticalTimers[i] === 0) {
+          this.lightCriticalTimers[i] = -1;
+          this.toggleLight(i, 2);
+        }
+      }
+      const _curAngle = (270+i*360/numLights) % 360;
 
-            if (this.lightTimers[i] === 0) {
-              this.toggleLight(i, 0);
+      for (let j=0; j<numHands; j++) {
+        if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= handPointingThreshold) {
+          this.lightShutoffTimers[i]--;
 
-              setTimeout(() => {
-                const _i = intRandomRange(0, numLights-1);
-                this.toggleLight(_i, 1);
-              }, 500 + intRandomRange(0, 500));
+          if (this.lightShutoffTimers[i] === 0) {
+            this.toggleLight(i, 0);
 
-            }
+            setTimeout(() => {
+              this.toggleLight(intRandomRange(0, numLights-1), 1);
+            }, 500 + intRandomRange(0, 500));
 
-            break;
           }
+
+          break;
         }
       }
     }
