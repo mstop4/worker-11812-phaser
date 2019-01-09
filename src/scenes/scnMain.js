@@ -27,7 +27,7 @@ export class scnMain extends Phaser.Scene {
     this.add.image(scnMain.center.x, scnMain.center.y, 'back');
     this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
 
-    WebFont.load({
+    WebFont.load({      //eslint-disable-line no-undef
       google: {
         families: ['Amarante']
       },

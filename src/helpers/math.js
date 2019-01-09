@@ -15,10 +15,15 @@ const pointLineDist = (aX, aY, bX, bY, pX, pY) => {
 };
 
 const dot2D = (aX, aY, bX, bY) => (aX * bX) + (aY * bY);
-const angleDifference = (t, p) => (p - t + 180) % 360 - 180;
+const angleDifference = (t, p) => {
+  const a = p - t + 180;
+  return a - Math.floor(a/360) * 360 - 180;
+};
+const intRandomRange = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
 module.exports = {
   pointLineDist,
   dot2D,
-  angleDifference
+  angleDifference,
+  intRandomRange
 };
