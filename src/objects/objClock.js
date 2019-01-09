@@ -43,7 +43,7 @@ export class objClock {
     this.freeLights = [];
 
     this.lightShutoffTime = 45;
-    this.lightCriticalTime = 105;
+    this.lightCriticalTime = 75;
 
     this.lights = this.game.add.group();
 
@@ -181,17 +181,28 @@ export class objClock {
   }
 
   checkHands = () => {
-    for (let i=0; i<numLights; i++) {
-      if (this.lightStates[i] === lightState.off) continue;
+    let meterDelta = 0;
 
-      if (this.lightStates[i] === lightState.on) {
+    for (let i=0; i<numLights; i++) {
+
+      switch (this.lightStates[i]) {
+      case lightState.off:
+        continue;
+
+      case lightState.on:
         this.lightCriticalTimers[i]--;
         
         if (this.lightCriticalTimers[i] === 0) {
           this.lightCriticalTimers[i] = -1;
           this.toggleLight(i, lightState.flash);
         }
+        break;
+
+      case lightState.flash:
+        meterDelta += 0.1;
+        break;
       }
+
       const _curAngle = (270+i*360/numLights) % 360;
 
       for (let j=0; j<numHands; j++) {
@@ -211,6 +222,8 @@ export class objClock {
           break;
         }
       }
+
+      this.game.updateMeter(meterDelta);
     }
   }
 

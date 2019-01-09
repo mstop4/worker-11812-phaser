@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import * as gameConfig from '../gameConfig';
 import { objClock } from '../objects/objClock';
+import { objMeter } from '../objects/objMeter';
 
 export class scnMain extends Phaser.Scene {
 
@@ -20,12 +21,14 @@ export class scnMain extends Phaser.Scene {
     this.load.image('lightOn', 'assets/sprites/lightOn.png');
     this.load.image('hand', 'assets/sprites/hand1.png');
     this.load.image('cap', 'assets/sprites/cap.png');
+    this.load.image('meter', 'assets/sprites/meter.png');
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
   }
 
   create = () => {
     this.add.image(scnMain.center.x, scnMain.center.y, 'back');
     this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
+    this.meter = new objMeter(this, 1200, scnMain.center.y);
 
     WebFont.load({      //eslint-disable-line no-undef
       google: {
@@ -40,5 +43,9 @@ export class scnMain extends Phaser.Scene {
 
   update = () => {
     this.clock.checkHands();
+  }
+
+  updateMeter = (delta) => {
+    this.meter.updateMeter(delta);
   }
 }
