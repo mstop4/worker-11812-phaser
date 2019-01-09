@@ -5,7 +5,13 @@ const lightRadius = 310;
 const labelRadius = 345;
 const numLights = 46;
 const numHands = 3;
-const handPointingThreshold = 2;
+const handPointingThreshold = 3;
+
+const lightState = {
+  off: 0,
+  on: 1,
+  flash: 2
+};
 
 export class objClock {
   constructor(game, x, y) {
@@ -18,11 +24,8 @@ export class objClock {
     this.createInputHandlers();
   }
 
-  update = () => {
-
-  }
-
   createLights = () => {
+
     this.game.anims.create({
       key: 'flash',
       frames: [
@@ -36,9 +39,12 @@ export class objClock {
     this.lightStates = [];
     this.lightShutoffTimers = [];
     this.lightCriticalTimers = [];
-    this.lightLabels = [];
-    this.lightShutoffTime = 30;
-    this.lightCriticalTime = 60;
+    this.usedLights = [-1];
+    this.freeLights = [];
+
+    this.lightShutoffTime = 45;
+    this.lightCriticalTime = 105;
+
     this.lights = this.game.add.group();
 
     for (let i=0; i<numLights; i++) {
@@ -49,14 +55,17 @@ export class objClock {
       const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'lightOff');
       _light.angle = i*360/numLights;
 
-      this.lightStates[i] = 0;
-      this.lightShutoffTimers[i] = -1;
-      this.lightCriticalTimers[i] = -1;
+      this.lightStates.push(0);
+      this.freeLights.push(i);
+      this.lightShutoffTimers.push(-1);
+      this.lightCriticalTimers.push(-1);
     }
 
-    setTimeout(() => {
-      this.toggleLight(intRandomRange(0, numLights-1), 1);
-    }, 500 + intRandomRange(0, 500));
+    for (let i=0; i<2; i++) {
+      setTimeout(() => {
+        this.toggleLight(this.getFreeLight(), lightState.on);
+      }, 500 + i*250 + intRandomRange(0, 500));
+    }
   }
 
   createHands = () => {
@@ -75,6 +84,8 @@ export class objClock {
   }
 
   createLabels = () => {
+    this.lightLabels = [];
+
     for (let i=0; i<numLights; i++) {
       const _rad = (90-i*360/numLights) * (Math.PI / 180); 
       const _offset_x = Math.cos(_rad) * labelRadius;
@@ -139,8 +150,6 @@ export class objClock {
   }
 
   toggleLight = (index, state) => {
-    console.log(`Toggle ${index} to state ${state}`);
-
     if (state >= 0 && state <= 2) {
       this.lightStates[index] = state;
 
@@ -159,6 +168,7 @@ export class objClock {
         this.lights.getFirstNth(index+1, true).setTexture('lightOn');
         this.lightShutoffTimers[index] = this.lightShutoffTime;
         this.lightCriticalTimers[index] = this.lightCriticalTime;
+        
         break;
       }
 
@@ -172,14 +182,14 @@ export class objClock {
 
   checkHands = () => {
     for (let i=0; i<numLights; i++) {
-      if (this.lightStates[i] === 0) continue;
+      if (this.lightStates[i] === lightState.off) continue;
 
-      if (this.lightStates[i] === 1) {
+      if (this.lightStates[i] === lightState.on) {
         this.lightCriticalTimers[i]--;
         
         if (this.lightCriticalTimers[i] === 0) {
           this.lightCriticalTimers[i] = -1;
-          this.toggleLight(i, 2);
+          this.toggleLight(i, lightState.flash);
         }
       }
       const _curAngle = (270+i*360/numLights) % 360;
@@ -189,10 +199,11 @@ export class objClock {
           this.lightShutoffTimers[i]--;
 
           if (this.lightShutoffTimers[i] === 0) {
-            this.toggleLight(i, 0);
+            this.toggleLight(i, lightState.off);
+            this.restockFreeLight();
 
             setTimeout(() => {
-              this.toggleLight(intRandomRange(0, numLights-1), 1);
+              this.toggleLight(this.getFreeLight(), lightState.on);
             }, 500 + intRandomRange(0, 500));
 
           }
@@ -200,6 +211,23 @@ export class objClock {
           break;
         }
       }
+    }
+  }
+
+  getFreeLight = () => {
+    if (this.freeLights.length < 1) return -1;
+
+    const _i = intRandomRange(0, this.freeLights.length);
+    const _used = this.freeLights.splice(_i, 1);
+    this.usedLights.push(_used[0]);
+    return _used[0];
+  }
+
+  restockFreeLight = () => {
+    const _free = this.usedLights.shift();
+
+    if (_free > -1) {
+      this.freeLights.push(_free);
     }
   }
 }
