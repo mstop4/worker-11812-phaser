@@ -39,6 +39,6 @@ export class scnMain extends Phaser.Scene {
   }
 
   update = () => {
-    this.clock.update();
+    this.clock.checkHands();
   }
 }

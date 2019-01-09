@@ -15,8 +15,10 @@ const pointLineDist = (aX, aY, bX, bY, pX, pY) => {
 };
 
 const dot2D = (aX, aY, bX, bY) => (aX * bX) + (aY * bY);
+const angleDifference = (t, p) => (p - t + 180) % 360 - 180;
 
 module.exports = {
   pointLineDist,
-  dot2D
+  dot2D,
+  angleDifference
 };

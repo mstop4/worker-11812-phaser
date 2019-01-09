@@ -1,9 +1,11 @@
-import { pointLineDist } from '../helpers/geometry'; 
+import { pointLineDist, angleDifference } from '../helpers/geometry'; 
 
 const clickRadius = 32;
 const lightRadius = 310;
 const labelRadius = 345;
 const numLights = 46;
+const numHands = 3;
+const handPointingThreshold = 3;
 
 export class objClock {
   constructor(game, x, y) {
@@ -14,9 +16,6 @@ export class objClock {
     this.createLights();
     this.createHands();
     this.createInputHandlers();
-  }
-
-  update = () => {
   }
 
   createLights = () => {
@@ -31,7 +30,9 @@ export class objClock {
     });
 
     this.lightStates = [];
+    this.lightTimers = [];
     this.lightLabels = [];
+    this.lightShutoffTime = 30;
     this.lights = this.game.add.group();
 
     for (let i=0; i<numLights; i++) {
@@ -42,9 +43,13 @@ export class objClock {
       const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'lightOff');
       _light.angle = i*360/numLights;
       this.lightStates[i] = 0;
+      this.lightTimers[i] = -1;
     }
 
-    setTimeout(() => this.turnOnLight(1), 1000);
+    setTimeout(() => {
+      this.toggleLight(1, 1);
+      this.lightTimers[0] = this.lightShutoffTime;
+    }, 1000);
   }
 
   createHands = () => {
@@ -52,14 +57,14 @@ export class objClock {
     this.handAngles = [0, 90, 180];
     this.hands = [];
 
-    for (var i=0; i<3; i++) {
+    for (var i=0; i<numHands; i++) {
       this.hands[i] = this.game.add.image(this.x, this.y, 'hand');
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
     }
 
     this.game.add.image(this.x, this.y, 'cap');
-    this.game.children.bringToTop(this.hands[2]);
+    this.game.children.bringToTop(this.hands[numHands-1]);
   }
 
   createLabels = () => {
@@ -67,23 +72,23 @@ export class objClock {
       const _rad = (90-i*360/numLights) * (Math.PI / 180); 
       const _offset_x = Math.cos(_rad) * labelRadius;
       const _offset_y = -Math.sin(_rad) * labelRadius;
-      let text;
+      let _text;
 
       switch (i) {
       case 0:
-        text = 'II';
+        _text = 'II';
         break;
       case 1:
-        text = 'III';
+        _text = 'III';
         break;
       case 45:
-        text = 'I';
+        _text = 'I';
         break;
       default:
-        text = i-1;
+        _text = i-1;
       }
 
-      this.lightLabels[i] = this.game.add.text(this.x + _offset_x, this.y + _offset_y, text, {
+      this.lightLabels[i] = this.game.add.text(this.x + _offset_x, this.y + _offset_y, _text, {
         fontFamily: 'Amarante',
         fontSize: '20px', 
         fill: '#000'
@@ -97,7 +102,7 @@ export class objClock {
       // Find and select closest hand
       const _handsDist = [];
 
-      for (var i=0; i<3; i++) {
+      for (var i=0; i<numHands; i++) {
         const _endX = this.x + Math.cos(this.hands[i].angle * (Math.PI / 180)) * 360;
         const _endY = this.y + Math.sin(this.hands[i].angle * (Math.PI / 180)) * 360;
         _handsDist[i] = pointLineDist(this.x, this.y, _endX, _endY, pointer.x, pointer.y);
@@ -125,7 +130,34 @@ export class objClock {
     });
   }
 
-  turnOnLight = (index) => {
-    this.lights.getFirstNth(index, true).play('flash');
+  toggleLight = (index, state) => {
+    console.log(`Toggle ${index} to state ${state}`);
+    if (state === 0) {
+      this.lights.getFirstNth(index, true).setTexture('lightOff');
+    }
+    else if (state === 1) {
+      this.lights.getFirstNth(index, true).setTexture('lightOn');
+    }
+    else if (state === 2) {
+      this.lights.getFirstNth(index, true).play('flash', true);
+    }
+  }
+
+  checkHands = () => {
+    for (let i=0; i<numLights; i++) {
+      const _curAngle = (90-i*360/numLights);
+
+      for (let j=0; j<numHands; j++) {
+        if (Math.abs(angleDifference(-this.handAngles[j], _curAngle)) <= handPointingThreshold) {
+          this.lightTimers[i]--;
+
+          if (this.lightTimers[i] === 0) {
+            this.lightTimers[i] = -1;
+            this.toggleLight(i+1, 0);
+          }
+          break;
+        }
+      }
+    }
   }
 }
