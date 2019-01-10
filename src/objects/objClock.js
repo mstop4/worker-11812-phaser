@@ -1,4 +1,4 @@
-//import Phaser from 'phaser';
+import Phaser from 'phaser';
 import { angleDifference, intRandomRange } from '../helpers/math'; 
 
 const lightRadius = 310;
@@ -71,19 +71,29 @@ export class objClock {
     this.handAngles = [0, 90, 180];
     this.hands = [];
 
-    //const _collisonArea = new Phaser.Geom.Rectangle(0, 0, 300, 101);
+    const _collisonArea = new Phaser.Geom.Rectangle(0, -20, 320, 61);
 
     for (var i=0; i<numHands; i++) {
-      this.hands[i] = this.game.add.image(this.x, this.y, 'hand').setInteractive();
+      this.hands[i] = this.game.add.image(this.x, this.y, 'hand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
+      console.log(this.hands[i]);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
       this.hands[i].id = i;
 
       this.game.input.setDraggable(this.hands[i]);
-      this.game.input.on('drag', (pointer, curHand) => {
-        this.handAngles[curHand.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
-        this.handAngles[curHand.id] = this.handAngles[curHand.id] < 0 ? this.handAngles[curHand.id] + 360 : this.handAngles[curHand.id];
-        curHand.angle = this.handAngles[curHand.id];
+
+      this.game.input.on('gameobjectover', (pointer, obj) => {
+        obj.setTint(0xFF0000);
+      });
+
+      this.game.input.on('gameobjectout', (pointer, obj) => {
+        obj.clearTint();
+      });
+
+      this.game.input.on('drag', (pointer, obj) => {
+        this.handAngles[obj.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
+        this.handAngles[obj.id] = this.handAngles[obj.id] < 0 ? this.handAngles[obj.id] + 360 : this.handAngles[obj.id];
+        obj.angle = this.handAngles[obj.id];
       });
     }
 
