@@ -1,6 +1,6 @@
-import { pointLineDist, angleDifference, intRandomRange } from '../helpers/math'; 
+import Phaser from 'phaser';
+import { angleDifference, intRandomRange } from '../helpers/math'; 
 
-const clickRadius = 32;
 const lightRadius = 310;
 const labelRadius = 345;
 const numLights = 46;
@@ -22,11 +22,9 @@ export class objClock {
     this.createLights();
     this.createLabels();
     this.createHands();
-    this.createInputHandlers();
   }
 
   createLights = () => {
-
     this.game.anims.create({
       key: 'flash',
       frames: [
@@ -70,14 +68,32 @@ export class objClock {
   }
 
   createHands = () => {
-    this.handSelected = -1;
     this.handAngles = [0, 90, 180];
     this.hands = [];
 
+    const _collisonArea = new Phaser.Geom.Rectangle(0, -20, 320, 61);
+
     for (var i=0; i<numHands; i++) {
-      this.hands[i] = this.game.add.image(this.x, this.y, 'hand');
+      this.hands[i] = this.game.add.image(this.x, this.y, 'hand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
+      this.hands[i].id = i;
+
+      this.game.input.setDraggable(this.hands[i]);
+
+      this.game.input.on('gameobjectover', (pointer, obj) => {
+        obj.setTint(0xFF0000);
+      });
+
+      this.game.input.on('gameobjectout', (pointer, obj) => {
+        obj.clearTint();
+      });
+
+      this.game.input.on('drag', (pointer, obj) => {
+        this.handAngles[obj.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
+        this.handAngles[obj.id] = this.handAngles[obj.id] < 0 ? this.handAngles[obj.id] + 360 : this.handAngles[obj.id];
+        obj.angle = this.handAngles[obj.id];
+      });
     }
 
     this.game.add.image(this.x, this.y, 'cap');
@@ -114,40 +130,6 @@ export class objClock {
       });
       this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/numLights);
     }
-  }
-
-  createInputHandlers = () => {
-    this.game.input.on('pointerdown', (pointer) => {
-      // Find and select closest hand
-      const _handsDist = [];
-
-      for (var i=0; i<numHands; i++) {
-        const _endX = this.x + Math.cos(this.hands[i].angle * (Math.PI / 180)) * 360;
-        const _endY = this.y + Math.sin(this.hands[i].angle * (Math.PI / 180)) * 360;
-        _handsDist[i] = pointLineDist(this.x, this.y, _endX, _endY, pointer.x, pointer.y);
-      }
-
-      const _minDist = Math.min(..._handsDist);
-
-      if (_minDist <= clickRadius) {
-        this.handSelected = _handsDist.indexOf(_minDist);
-      }
-      else {
-        this.handSelected = -1;
-      }
-    });
-
-    this.game.input.on('pointerup', () => {
-      this.handSelected = -1;
-    });
-
-    this.game.input.on('pointermove', (pointer) => {
-      if (this.handSelected > -1) {
-        this.handAngles[this.handSelected] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
-        this.handAngles[this.handSelected] = this.handAngles[this.handSelected] < 0 ? this.handAngles[this.handSelected] + 360 : this.handAngles[this.handSelected];
-        this.hands[this.handSelected].angle = this.handAngles[this.handSelected];
-      }
-    });
   }
 
   toggleLight = (index, state) => {
