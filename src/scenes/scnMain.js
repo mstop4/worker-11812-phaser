@@ -19,6 +19,7 @@ export class scnMain extends Phaser.Scene {
   }
 
   create = () => {
+    this.input.addPointer();
     this.add.image(scnMain.center.x, scnMain.center.y, 'back');
     this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
     this.meter = new objMeter(this, 1200, scnMain.center.y);

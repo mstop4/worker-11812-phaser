@@ -25,7 +25,6 @@ export class objClock {
   }
 
   createLights = () => {
-
     this.game.anims.create({
       key: 'flash',
       frames: [
@@ -69,7 +68,6 @@ export class objClock {
   }
 
   createHands = () => {
-    this.handSelected = -1;
     this.handAngles = [0, 90, 180];
     this.hands = [];
 
@@ -82,10 +80,10 @@ export class objClock {
       this.hands[i].id = i;
 
       this.game.input.setDraggable(this.hands[i]);
-      this.game.input.on('drag', (pointer, gameObject) => {
-        this.handAngles[gameObject.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
-        this.handAngles[gameObject.id] = this.handAngles[gameObject.id] < 0 ? this.handAngles[gameObject.id] + 360 : this.handAngles[gameObject.id];
-        gameObject.angle = this.handAngles[gameObject.id];
+      this.game.input.on('drag', (pointer, curHand) => {
+        this.handAngles[curHand.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
+        this.handAngles[curHand.id] = this.handAngles[curHand.id] < 0 ? this.handAngles[curHand.id] + 360 : this.handAngles[curHand.id];
+        curHand.angle = this.handAngles[curHand.id];
       });
     }
 
