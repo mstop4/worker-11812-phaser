@@ -20,6 +20,7 @@ export class objClock {
     this.y = y;
 
     this.createLights();
+    this.createLabels();
     this.createHands();
     this.createInputHandlers();
   }
@@ -211,6 +212,7 @@ export class objClock {
 
           if (this.lightShutoffTimers[i] === 0) {
             this.toggleLight(i, lightState.off);
+            this.game.updateScore(1);
             this.restockFreeLight();
 
             setTimeout(() => {

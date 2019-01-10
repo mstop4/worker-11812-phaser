@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import * as gameConfig from '../gameConfig';
 import { objClock } from '../objects/objClock';
 import { objMeter } from '../objects/objMeter';
+import { objUI } from '../objects/objUI';
 
 export class scnMain extends Phaser.Scene {
 
@@ -11,38 +12,25 @@ export class scnMain extends Phaser.Scene {
   }
 
   constructor() {
-    super();
+    super('scnMain');
     this.clock = null;
-  }
-
-  preload = () => {
-    this.load.image('back', 'assets/sprites/back.png');
-    this.load.image('lightOff', 'assets/sprites/lightOff.png');
-    this.load.image('lightOn', 'assets/sprites/lightOn.png');
-    this.load.image('hand', 'assets/sprites/hand1.png');
-    this.load.image('cap', 'assets/sprites/cap.png');
-    this.load.image('meter', 'assets/sprites/meter.png');
-    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+    this.meter = null;
+    this.ui = null;
   }
 
   create = () => {
     this.add.image(scnMain.center.x, scnMain.center.y, 'back');
     this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
     this.meter = new objMeter(this, 1200, scnMain.center.y);
-
-    WebFont.load({      //eslint-disable-line no-undef
-      google: {
-        families: ['Amarante']
-      },
-
-      active: () => {
-        this.clock.createLabels(this);
-      }
-    });
+    this.ui = new objUI(this);
   }
 
   update = () => {
     this.clock.checkHands();
+  }
+
+  updateScore = (delta) => {
+    this.ui.updateScore(delta);
   }
 
   updateMeter = (delta) => {
