@@ -75,7 +75,6 @@ export class objClock {
 
     for (var i=0; i<numHands; i++) {
       this.hands[i] = this.game.add.image(this.x, this.y, 'hand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
-      console.log(this.hands[i]);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
       this.hands[i].id = i;
