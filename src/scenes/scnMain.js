@@ -21,6 +21,7 @@ export default class scnMain extends Phaser.Scene {
   create = () => {
     this.input.addPointer();
     this.add.image(center.x, center.y, 'sprBack');
+    
     this.audioManager = new objAudioManager(this);
     this.clock = new objClock(this, center.x, center.y);
     this.meter = new objMeter(this, 1200, center.y);

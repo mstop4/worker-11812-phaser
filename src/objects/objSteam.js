@@ -8,6 +8,7 @@ const center = {
 export default class objSteam {
   constructor(game) {
     this.game = game;
+    this.isSteaming = false;
 
     this.clouds = game.add.particles('sprCloud');
 
@@ -36,10 +37,16 @@ export default class objSteam {
   startSteam = () => {
     this.emitterL.start();
     this.emitterR.start();
+    this.isSteaming = true;
   }
 
   stopSteam = () => {
     this.emitterL.stop();
     this.emitterR.stop();    
+    this.isSteaming = false;
+  }
+
+  fadeOut = () => {
+    this.game.cameras.main.fade(2000, 255, 255, 255);
   }
 }
