@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import GameScalePlugin from 'phaser-plugin-game-scale';
 
 import scnLoading from './scenes/scnLoading';
+import scnTitle from './scenes/scnTitle';
 import scnMain from './scenes/scnMain';
 import * as gameConfig from './gameConfig.js';
 
@@ -9,6 +10,7 @@ const config = {
   type: Phaser.AUTO,
   scene: [
     scnLoading,
+    scnTitle,
     scnMain
   ],
   height: gameConfig.appHeight,

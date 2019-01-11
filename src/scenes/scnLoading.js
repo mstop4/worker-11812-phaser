@@ -26,7 +26,7 @@ export default class scnLoading extends Phaser.Scene {
       },
 
       active: () => {
-        this.scene.start('scnMain');
+        this.scene.start('scnTitle');
       }
     });
   }
