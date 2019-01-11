@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export class scnLoading extends Phaser.Scene {
+export default class scnLoading extends Phaser.Scene {
   constructor() {
     super('scnLoading');
   }

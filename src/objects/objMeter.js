@@ -1,4 +1,4 @@
-export class objMeter {
+export default class objMeter {
   constructor(game, x, y) {
     /*this.game = game;
     this.x = x;

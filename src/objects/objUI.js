@@ -1,4 +1,4 @@
-export class objUI {
+export default class objUI {
   constructor(game) {
     this.game = game;
     this.score = 0;

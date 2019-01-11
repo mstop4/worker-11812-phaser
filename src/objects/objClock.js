@@ -13,7 +13,7 @@ const lightState = {
   flash: 2
 };
 
-export class objClock {
+export default class objClock {
   constructor(game, x, y) {
     this.game = game;
     this.x = x;

@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import * as gameConfig from '../gameConfig';
-import { objClock } from '../objects/objClock';
-import { objMeter } from '../objects/objMeter';
-import { objUI } from '../objects/objUI';
+import objClock from '../objects/objClock';
+import objMeter from '../objects/objMeter';
+import objUI from '../objects/objUI';
 
-export class scnMain extends Phaser.Scene {
+export default class scnMain extends Phaser.Scene {
 
   static center = { 
     x: gameConfig.appWidth / 2,
