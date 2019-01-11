@@ -28,14 +28,15 @@ export default class objClock {
     this.game.anims.create({
       key: 'flash',
       frames: [
-        { key: 'lightOff' },
-        { key: 'lightOn' },
+        { key: 'sprLightOff' },
+        { key: 'sprLightOn' },
       ],
       frameRate: 12,
       repeat: -1
     });
 
     this.lightStates = [];
+    this.lightSfx = [];
     this.lightShutoffTimers = [];
     this.lightCriticalTimers = [];
     this.usedLights = [-1];
@@ -51,10 +52,11 @@ export default class objClock {
       const _offset_x = Math.cos(_rad) * lightRadius;
       const _offset_y = -Math.sin(_rad) * lightRadius;
 
-      const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'lightOff');
+      const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'sprLightOff');
       _light.angle = i*360/numLights;
 
       this.lightStates.push(0);
+      this.lightSfx.push(null);
       this.freeLights.push(i);
       this.lightShutoffTimers.push(-1);
       this.lightCriticalTimers.push(-1);
@@ -69,15 +71,17 @@ export default class objClock {
 
   createHands = () => {
     this.handAngles = [0, 90, 180];
+    this.handSfx = [];
     this.hands = [];
 
     const _collisonArea = new Phaser.Geom.Rectangle(0, -20, 320, 61);
 
     for (var i=0; i<numHands; i++) {
-      this.hands[i] = this.game.add.image(this.x, this.y, 'hand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
+      this.hands[i] = this.game.add.image(this.x, this.y, 'sprHand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
       this.hands[i].id = i;
+      this.handSfx.push(null);
 
       this.game.input.setDraggable(this.hands[i]);
 
@@ -96,7 +100,7 @@ export default class objClock {
       });
     }
 
-    this.game.add.image(this.x, this.y, 'cap');
+    this.game.add.image(this.x, this.y, 'sprCap');
     this.game.children.bringToTop(this.hands[numHands-1]);
   }
 
@@ -140,23 +144,26 @@ export default class objClock {
 
       case 0: {
         const _light = this.lights.getFirstNth(index+1, true);
-        _light.setTexture('lightOff');
+        _light.setTexture('sprLightOff');
         _light.anims.stop(null, true);
         this.lightShutoffTimers[index] = -1;
         this.lightCriticalTimers[index] = -1;
+        this.game.audioManager.stopSound(this.lightSfx[index]);
         break;
       }
 
       case 1: {
-        this.lights.getFirstNth(index+1, true).setTexture('lightOn');
+        this.lights.getFirstNth(index+1, true).setTexture('sprLightOn');
         this.lightShutoffTimers[index] = this.lightShutoffTime;
         this.lightCriticalTimers[index] = this.lightCriticalTime;
-        
+        this.lightSfx[index] = this.game.audioManager.playSound('sndBuzz', true);
         break;
       }
 
       case 2: {
         this.lights.getFirstNth(index+1, true).play('flash', true);
+        this.game.audioManager.stopSound(this.lightSfx[index]);
+        this.lightSfx[index] = this.game.audioManager.playSound('sndShort', true);
         break;
       }
       }
@@ -191,11 +198,18 @@ export default class objClock {
       for (let j=0; j<numHands; j++) {
         if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= handPointingThreshold) {
           this.lightShutoffTimers[i]--;
+          if (this.handSfx[j] === null) {
+            this.handSfx[j] = this.game.audioManager.playSound('sndDiffuse', false);
+          }
 
           if (this.lightShutoffTimers[i] === 0) {
             this.toggleLight(i, lightState.off);
-            this.game.updateScore(1);
+            this.game.ui.updateScore(1);
             this.restockFreeLight();
+            if (this.handSfx[j]) {
+              this.game.audioManager.stopSound(this.handSfx[j]);
+              this.handSfx[j] = null;
+            }
 
             setTimeout(() => {
               this.toggleLight(this.getFreeLight(), lightState.on);
@@ -207,7 +221,7 @@ export default class objClock {
         }
       }
 
-      this.game.updateMeter(meterDelta);
+      this.game.meter.updateMeter(meterDelta);
     }
   }
 

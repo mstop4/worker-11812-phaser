@@ -1,15 +1,16 @@
 import Phaser from 'phaser';
-import * as gameConfig from '../gameConfig';
+import { appWidth, appHeight } from '../gameConfig';
+import objAudioManager from '../objects/objAudioManager';
 import objClock from '../objects/objClock';
 import objMeter from '../objects/objMeter';
 import objUI from '../objects/objUI';
 
-export default class scnMain extends Phaser.Scene {
+const center = { 
+  x: appWidth / 2,
+  y: appHeight / 2
+};
 
-  static center = { 
-    x: gameConfig.appWidth / 2,
-    y: gameConfig.appHeight / 2
-  }
+export default class scnMain extends Phaser.Scene {
 
   constructor() {
     super('scnMain');
@@ -20,21 +21,14 @@ export default class scnMain extends Phaser.Scene {
 
   create = () => {
     this.input.addPointer();
-    this.add.image(scnMain.center.x, scnMain.center.y, 'back');
-    this.clock = new objClock(this, scnMain.center.x, scnMain.center.y);
-    this.meter = new objMeter(this, 1200, scnMain.center.y);
+    this.add.image(center.x, center.y, 'sprBack');
+    this.audioManager = new objAudioManager(this);
+    this.clock = new objClock(this, center.x, center.y);
+    this.meter = new objMeter(this, 1200, center.y);
     this.ui = new objUI(this);
   }
 
   update = () => {
     this.clock.checkHands();
-  }
-
-  updateScore = (delta) => {
-    this.ui.updateScore(delta);
-  }
-
-  updateMeter = (delta) => {
-    this.meter.updateMeter(delta);
   }
 }

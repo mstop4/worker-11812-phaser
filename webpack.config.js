@@ -51,7 +51,7 @@ module.exports = {
     }),
 
     new CopyWebPackPlugin([
-      { from: './src/assets/sprites', to: 'assets/sprites'},
+      { from: './src/assets', to: 'assets'},
       { from: './src/index.html', to: 'index.html'}
     ]),
   ],

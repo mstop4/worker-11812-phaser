@@ -6,7 +6,7 @@ export default class objMeter {
     this.progress = 0;
     this.maxProgress = 640;
 
-    this.meter = game.add.image(x, y, 'meter');
+    this.meter = game.add.image(x, y, 'sprMeter');
     this.meter.setCrop(0, 640 - this.progress, 64, this.progress);
   }
 
