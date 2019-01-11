@@ -14,9 +14,6 @@ export default class scnMain extends Phaser.Scene {
 
   constructor() {
     super('scnMain');
-    this.clock = null;
-    this.meter = null;
-    this.ui = null;
   }
 
   create = () => {
@@ -26,6 +23,8 @@ export default class scnMain extends Phaser.Scene {
     this.clock = new objClock(this, center.x, center.y);
     this.meter = new objMeter(this, 1200, center.y);
     this.ui = new objUI(this);
+
+    this.audioManager.playSound('musMain', true);
   }
 
   update = () => {
