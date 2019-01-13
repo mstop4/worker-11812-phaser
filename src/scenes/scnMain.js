@@ -35,6 +35,7 @@ export default class scnMain extends Phaser.Scene {
   update = () => {
     if (!this.gameOver) {
       this.clock.checkHands();
+      this.ui.updateTimer();
     }
   }
 
