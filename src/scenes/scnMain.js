@@ -24,7 +24,7 @@ export default class scnMain extends Phaser.Scene {
     
     this.audioManager = new objAudioManager(this);
     this.clock = new objClock(this, center.x, center.y);
-    this.meter = new objMeter(this, 1200, center.y);
+    this.meter = new objMeter(this, 1125, center.y + 16);
     this.ui = new objUI(this);
     this.steam = new objSteam(this);
 

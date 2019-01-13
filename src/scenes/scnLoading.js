@@ -11,7 +11,8 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
     this.load.image('sprHand', 'assets/sprites/hand1.png');
     this.load.image('sprCap', 'assets/sprites/cap.png');
-    this.load.image('sprMeter', 'assets/sprites/meter.png');
+    this.load.image('sprMeterBack', 'assets/sprites/meter.png');
+    this.load.image('sprMeterFront', 'assets/sprites/meter2.png');
     this.load.image('sprCloud', 'assets/sprites/cloud.png');
 
     this.load.audio('musMain', ['assets/audio/music/bgm.mp3']);
