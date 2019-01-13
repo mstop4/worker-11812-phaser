@@ -14,7 +14,6 @@ export default class scnLoading extends Phaser.Scene {
     }).setOrigin(0.5, 0.5);
 
     this.input.on('pointerdown', () => {
-      console.log("asds");
       this.scene.start('scnMain');
     });
   }

@@ -26,6 +26,7 @@ export default class objMeter {
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint - this.progress, 64, meterFrontInfo.height);
 
     if (this.progress === this.maxProgress && !this.game.steam.isSteaming) {
+      this.game.setGameOver();
       this.game.steam.startSteam();
       setTimeout(this.game.steam.fadeOut, 1000);
     }

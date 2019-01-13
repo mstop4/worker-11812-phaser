@@ -20,11 +20,12 @@ export default class scnMain extends Phaser.Scene {
 
   create = () => {
     this.input.addPointer();
-    this.add.image(center.x, center.y, 'sprBack');
+    this.cameras.main.setBackgroundColor('#687D64');
     
+    this.gameOver = false;
     this.audioManager = new objAudioManager(this);
-    this.clock = new objClock(this, center.x, center.y);
-    this.meter = new objMeter(this, 1125, center.y + 16);
+    this.clock = new objClock(this, center.x - 112, center.y);
+    this.meter = new objMeter(this, 1080, center.y + 16);
     this.ui = new objUI(this);
     this.steam = new objSteam(this);
 
@@ -32,6 +33,12 @@ export default class scnMain extends Phaser.Scene {
   }
 
   update = () => {
-    this.clock.checkHands();
+    if (!this.gameOver) {
+      this.clock.checkHands();
+    }
+  }
+
+  setGameOver = () => {
+    this.gameOver = true;
   }
 }

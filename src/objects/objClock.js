@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import { angleDifference, intRandomRange } from '../helpers/math'; 
 
-const lightRadius = 310;
-const labelRadius = 345;
+const lightRadius = 290;
+const labelRadius = 325;
 const numLights = 46;
 const numHands = 3;
 const handPointingThreshold = 3;
@@ -19,6 +19,7 @@ export default class objClock {
     this.x = x;
     this.y = y;
 
+    this.game.add.image(x, y, 'sprBack');
     this.createLights();
     this.createLabels();
     this.createHands();
@@ -82,17 +83,23 @@ export default class objClock {
       this.game.input.setDraggable(this.hands[i]);
 
       this.game.input.on('gameobjectover', (pointer, obj) => {
-        obj.setTint(0xFF0000);
+        if (!this.game.gameOver) {
+          obj.setTint(0xFF0000);
+        }
       });
 
       this.game.input.on('gameobjectout', (pointer, obj) => {
-        obj.clearTint();
+        if (!this.game.gameOver) {
+          obj.clearTint();
+        }
       });
 
       this.game.input.on('drag', (pointer, obj) => {
-        this.handAngles[obj.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
-        this.handAngles[obj.id] = this.handAngles[obj.id] < 0 ? this.handAngles[obj.id] + 360 : this.handAngles[obj.id];
-        obj.angle = this.handAngles[obj.id];
+        if (!this.game.gameOver) {
+          this.handAngles[obj.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
+          this.handAngles[obj.id] = this.handAngles[obj.id] < 0 ? this.handAngles[obj.id] + 360 : this.handAngles[obj.id];
+          obj.angle = this.handAngles[obj.id];
+        }
       });
     }
 
