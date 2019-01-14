@@ -9,15 +9,15 @@ const meterFrontInfo = {
 };
 
 export default class objMeter {
-  constructor(game, x, y) {
-    this.game = game;
+  constructor(scene, x, y) {
+    this.scene = scene;
     /*this.x = x;
     this.y = y;*/
     this.progress = 0;
     this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
 
-    this.meterBack = game.add.image(x, y, 'sprMeterBack');
-    this.meterFront = game.add.image(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront');
+    this.meterBack = scene.add.image(x, y, 'sprMeterBack');
+    this.meterFront = scene.add.image(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront');
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint, 64, meterFrontInfo.height);
   }
 
@@ -25,10 +25,10 @@ export default class objMeter {
     this.progress = Math.min(this.progress + delta, this.maxProgress);
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint - this.progress, 64, meterFrontInfo.height);
 
-    if (this.progress === this.maxProgress && !this.game.steam.isSteaming) {
-      this.game.setGameOver();
-      this.game.steam.startSteam();
-      setTimeout(this.game.steam.fadeOut, 1000);
+    if (this.progress === this.maxProgress && !this.scene.steam.isSteaming) {
+      this.scene.setGameOver();
+      this.scene.steam.startSteam();
+      setTimeout(this.scene.steam.fadeOut, 1000);
     }
   }
 }

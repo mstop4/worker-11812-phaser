@@ -16,30 +16,55 @@ export default class scnMain extends Phaser.Scene {
 
   constructor() {
     super('scnMain');
+    this.isPaused = false;
   }
 
   create = () => {
+    this.anims.create({
+      key: 'flash',
+      frames: [
+        { key: 'sprLightOff' },
+        { key: 'sprLightOn' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
     this.input.addPointer();
     this.cameras.main.setBackgroundColor('#687D64');
     
-    this.gameOver = false;
+    this.sceneOver = false;
     this.audioManager = new objAudioManager(this);
     this.clock = new objClock(this, center.x - 112, center.y);
     this.meter = new objMeter(this, 1080, center.y);
     this.ui = new objUI(this);
     this.steam = new objSteam(this);
 
-    this.audioManager.playSound('musMain', true);
+    this.bgm = this.audioManager.playSound('musMain', true);
+
+    this.sys.game.events.on('hidden', () => {
+      this.scene.sleep();
+      this.ui.pauseTimer();
+    });
+
+    this.sys.game.events.on('visible', () => {
+      this.scene.wake();
+      this.ui.resumeTimer();
+    });    
   }
 
   update = () => {
-    if (!this.gameOver) {
+    if (!this.sceneOver) {
       this.clock.checkHands();
       this.ui.updateTimer();
     }
   }
 
   setGameOver = () => {
-    this.gameOver = true;
+    this.sceneOver = true;
+    setTimeout(() => {
+      this.audioManager.stopSound(this.bgm);
+      this.scene.start('scnTitle');
+    }, 5000);
   }
 }

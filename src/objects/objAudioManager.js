@@ -1,10 +1,11 @@
 export default class objAudioManager {
-  constructor(game) {
-    this.game = game;
+  constructor(scene) {
+    this.scene = scene;
+    this.bgm = null;
   }
 
   playSound = (sound, loop) => {
-    const _soundRef = this.game.sound.add(sound);
+    const _soundRef = this.scene.sound.add(sound);
     _soundRef.play('', {
       loop: loop
     });

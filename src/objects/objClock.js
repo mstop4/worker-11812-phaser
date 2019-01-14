@@ -14,28 +14,18 @@ const lightState = {
 };
 
 export default class objClock {
-  constructor(game, x, y) {
-    this.game = game;
+  constructor(scene, x, y) {
+    this.scene = scene;
     this.x = x;
     this.y = y;
 
-    this.game.add.image(x, y, 'sprBack');
+    this.scene.add.image(x, y, 'sprBack');
     this.createLights();
     this.createLabels();
     this.createHands();
   }
 
   createLights = () => {
-    this.game.anims.create({
-      key: 'flash',
-      frames: [
-        { key: 'sprLightOff' },
-        { key: 'sprLightOn' },
-      ],
-      frameRate: 12,
-      repeat: -1
-    });
-
     this.lightStates = [];
     this.lightShutoffTimers = [];
     this.lightCriticalTimers = [];
@@ -45,7 +35,7 @@ export default class objClock {
     this.lightShutoffTime = 45;
     this.lightCriticalTime = 75;
 
-    this.lights = this.game.add.group();
+    this.lights = this.scene.add.group();
 
     for (let i=0; i<numLights; i++) {
       const _rad = (90-i*360/numLights) * (Math.PI / 180); 
@@ -75,27 +65,27 @@ export default class objClock {
     const _collisonArea = new Phaser.Geom.Rectangle(0, -15, 280, 49);
 
     for (var i=0; i<numHands; i++) {
-      this.hands[i] = this.game.add.image(this.x, this.y, 'sprHand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
+      this.hands[i] = this.scene.add.image(this.x, this.y, 'sprHand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
       this.hands[i].id = i;
 
-      this.game.input.setDraggable(this.hands[i]);
+      this.scene.input.setDraggable(this.hands[i]);
 
-      this.game.input.on('gameobjectover', (pointer, obj) => {
-        if (!this.game.gameOver) {
+      this.scene.input.on('gameobjectover', (pointer, obj) => {
+        if (!this.scene.gameOver) {
           obj.setTint(0xFF0000);
         }
       });
 
-      this.game.input.on('gameobjectout', (pointer, obj) => {
-        if (!this.game.gameOver) {
+      this.scene.input.on('gameobjectout', (pointer, obj) => {
+        if (!this.scene.gameOver) {
           obj.clearTint();
         }
       });
 
-      this.game.input.on('drag', (pointer, obj) => {
-        if (!this.game.gameOver) {
+      this.scene.input.on('drag', (pointer, obj) => {
+        if (!this.scene.gameOver) {
           this.handAngles[obj.id] = Math.atan2(pointer.y - this.y, pointer.x - this.x) * (180 / Math.PI);
           this.handAngles[obj.id] = this.handAngles[obj.id] < 0 ? this.handAngles[obj.id] + 360 : this.handAngles[obj.id];
           obj.angle = this.handAngles[obj.id];
@@ -103,8 +93,8 @@ export default class objClock {
       });
     }
 
-    this.game.add.image(this.x, this.y, 'sprCap');
-    this.game.children.bringToTop(this.hands[numHands-1]);
+    this.scene.add.image(this.x, this.y, 'sprCap');
+    this.scene.children.bringToTop(this.hands[numHands-1]);
   }
 
   createLabels = () => {
@@ -130,7 +120,7 @@ export default class objClock {
         _text = i-1;
       }
 
-      this.lightLabels[i] = this.game.add.text(this.x + _offset_x, this.y + _offset_y, _text, {
+      this.lightLabels[i] = this.scene.add.text(this.x + _offset_x, this.y + _offset_y, _text, {
         fontFamily: 'Amarante',
         fontSize: '20px', 
         fill: '#000'
@@ -200,7 +190,7 @@ export default class objClock {
 
           if (this.lightShutoffTimers[i] === 0) {
             this.toggleLight(i, lightState.off);
-            this.game.ui.updateScore(1);
+            this.scene.ui.updateScore(1);
             this.restockFreeLight();
 
             setTimeout(() => {
@@ -213,7 +203,7 @@ export default class objClock {
         }
       }
 
-      this.game.meter.updateMeter(meterDelta);
+      this.scene.meter.updateMeter(meterDelta);
     }
   }
 

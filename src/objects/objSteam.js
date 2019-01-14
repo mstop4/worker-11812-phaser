@@ -6,11 +6,11 @@ const center = {
 };
 
 export default class objSteam {
-  constructor(game) {
-    this.game = game;
+  constructor(scene) {
+    this.scene = scene;
     this.isSteaming = false;
 
-    this.clouds = game.add.particles('sprCloud');
+    this.clouds = scene.add.particles('sprCloud');
 
     const _emitterBaseConfig = {
       on: false,
@@ -47,6 +47,6 @@ export default class objSteam {
   }
 
   fadeOut = () => {
-    this.game.cameras.main.fade(2000, 255, 255, 255);
+    this.scene.cameras.main.fade(2000, 255, 255, 255);
   }
 }
