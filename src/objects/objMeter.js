@@ -1,10 +1,10 @@
 const meterFrontInfo = {
   x: 0,
-  y: 5,
-  width: 55,
-  height: 592,
-  zeroPoint: 558,
-  hundredPoint: 56,
+  y: 3,
+  width: 56,
+  height: 616,
+  zeroPoint: 580,
+  hundredPoint: 59,
   maxPoint: 0
 };
 

@@ -72,7 +72,7 @@ export default class objClock {
     this.handAngles = [0, 90, 180];
     this.hands = [];
 
-    const _collisonArea = new Phaser.Geom.Rectangle(0, -20, 320, 61);
+    const _collisonArea = new Phaser.Geom.Rectangle(0, -15, 280, 49);
 
     for (var i=0; i<numHands; i++) {
       this.hands[i] = this.game.add.image(this.x, this.y, 'sprHand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);

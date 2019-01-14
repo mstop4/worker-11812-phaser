@@ -10,27 +10,19 @@ export default class objUI {
 
     this.scoreLabel = game.add.text(12, 12, 'Score', {
       fontFamily: 'Fondamento',
-      fontSize: '36px', 
+      fontSize: '24px', 
       fill: '#000'
     });
 
-    this.scoreValue = game.add.text(16, 48, this.score, {
-      fontFamily: 'Fondamento',
-      fontSize: '48px', 
-      fill: '#000'
-    });
+    this.scoreValue = game.add.bitmapText(8, 32, 'fntMetroNums', this.score);
 
     this.timeLabel = game.add.text(12, appHeight-12, 'Time', {
       fontFamily: 'Fondamento',
-      fontSize: '36px', 
+      fontSize: '24px', 
       fill: '#000'
     }).setOrigin(0,1.0);
 
-    this.timeValue = game.add.text(12, appHeight-52, this.time, {
-      fontFamily: 'Fondamento',
-      fontSize: '48px', 
-      fill: '#000'
-    }).setOrigin(0,1.0);
+    this.timeValue = game.add.bitmapText(8, appHeight-36, 'fntMetroNums', this.time).setOrigin(0,1.0);
   }
 
   updateTimer = () => {
