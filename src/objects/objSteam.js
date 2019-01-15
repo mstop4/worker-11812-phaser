@@ -22,7 +22,7 @@ export default class objSteam {
       rotate: {min: -90, max: 90},
       alpha: {start: 0.75, end: 0},
       maxParticles: 50,
-      frequency: 1000/15
+      frequency: 1000
     };
 
     const _emitterDeathZone = {
@@ -43,6 +43,14 @@ export default class objSteam {
     }).setDeathZone(_emitterDeathZone);
 
     this.setIntensity(0);
+
+    this.keyQ = this.scene.input.keyboard.addkey(Phaser.Input.Keycodes.Q);
+  }
+
+  update = () => {
+    if (this.keyQ.isDown) {
+      this.emitterL.setFrequency(1000);
+    }
   }
 
   setIntensity = (intensity) => {
