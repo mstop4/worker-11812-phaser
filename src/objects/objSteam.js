@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { appWidth, appHeight } from '../gameConfig';
 
 const center = { 
@@ -24,16 +25,22 @@ export default class objSteam {
       frequency: 1000/15
     };
 
+    const _emitterDeathZone = {
+      source: new Phaser.Geom.Rectangle(0, 0, appWidth, appHeight),
+      type: 'onLeave'
+    };
+
     this.emitterL = this.clouds.createEmitter({
       ..._emitterBaseConfig,
       x: 0,
       angle: {min: -90, max: 90}
-    });
+    }).setDeathZone(_emitterDeathZone);
+
     this.emitterR = this.clouds.createEmitter({
       ..._emitterBaseConfig,
       x: appWidth,
       angle: {min: 90, max: 270}
-    });
+    }).setDeathZone(_emitterDeathZone);
 
     this.setIntensity(0);
   }
@@ -45,6 +52,7 @@ export default class objSteam {
       this.emitterL.setFrequency(1000/30);
       this.emitterR.setFrequency(1000/30);
     } 
+    
     else {
       this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
       this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
@@ -57,19 +65,15 @@ export default class objSteam {
   }
 
   startSteam = () => {
-    if (!this.isSteaming) {
-      this.emitterL.start();
-      this.emitterR.start();
-      this.isSteaming = true;
-    }
+    this.emitterL.start();
+    this.emitterR.start();
+    this.isSteaming = true;
   }
 
   stopSteam = () => {
-    if (this.isSteaming) {
-      this.emitterL.stop();
-      this.emitterR.stop();    
-      this.isSteaming = false;
-    }
+    this.emitterL.stop();
+    this.emitterR.stop();    
+    this.isSteaming = false;
   }
 
   fadeOut = () => {

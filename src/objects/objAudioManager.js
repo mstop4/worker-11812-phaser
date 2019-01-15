@@ -13,7 +13,7 @@ export default class objAudioManager {
   }
 
   stopSound = (ref) => {
-    if (ref) {
+    if (ref !== null) {
       ref.stop();
       ref.destroy();
     }
