@@ -41,6 +41,7 @@ export default class scnMain extends Phaser.Scene {
     this.steam = new objSteam(this);
 
     this.bgm = this.audioManager.playSound('musMain', true);
+    this.bgmVolume = 1;
 
     this.sys.game.events.on('hidden', () => {
       this.scene.sleep();
@@ -57,6 +58,13 @@ export default class scnMain extends Phaser.Scene {
     if (!this.sceneOver) {
       this.clock.checkHands();
       this.ui.updateTimer();
+    }
+
+    else {
+      if (this.bgmVolume > 0) {
+        this.audioManager.setVolume(this.bgm, this.bgmVolume);
+        this.bgmVolume = Math.max(0, this.bgmVolume - 1/(4*60));
+      }
     }
   }
 

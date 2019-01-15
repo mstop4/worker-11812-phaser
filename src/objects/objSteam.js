@@ -42,15 +42,7 @@ export default class objSteam {
       angle: {min: 90, max: 270}
     }).setDeathZone(_emitterDeathZone);
 
-    this.setIntensity(0);
-
-    this.keyQ = this.scene.input.keyboard.addkey(Phaser.Input.Keycodes.Q);
-  }
-
-  update = () => {
-    if (this.keyQ.isDown) {
-      this.emitterL.setFrequency(1000);
-    }
+    this.setIntensity(0.0);
   }
 
   setIntensity = (intensity) => {
@@ -65,10 +57,10 @@ export default class objSteam {
       this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
       this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
 
-      //const _freq = 1000 - (1000 - 1000/30) * intensity;
+      const _freq = 500 - (500 - 1000/15) * intensity;
 
-      //this.emitterL.setFrequency(_freq);
-      //this.emitterR.setFrequency(_freq);
+      this.emitterL.frequency = _freq;
+      this.emitterR.frequency = _freq;
     }
   }
 

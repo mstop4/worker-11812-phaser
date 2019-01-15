@@ -18,4 +18,10 @@ export default class objAudioManager {
       ref.destroy();
     }
   }
+
+  setVolume = (ref, volume) => {
+    if (ref) {
+      ref.setVolume(volume);
+    }
+  }
 }
