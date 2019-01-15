@@ -25,10 +25,22 @@ export default class objMeter {
     this.progress = Math.min(this.progress + delta, this.maxProgress);
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint - this.progress, 64, meterFrontInfo.height);
 
-    if (this.progress === this.maxProgress && !this.scene.steam.isSteaming) {
+    if (this.progress >= this.maxProgress) {
       this.scene.setGameOver();
-      this.scene.steam.startSteam();
+      this.scene.steam.setIntensity(-1);
       setTimeout(this.scene.steam.fadeOut, 1000);
+    }
+
+    else {
+      const _ratio = Math.min(this.progress / (meterFrontInfo.zeroPoint - meterFrontInfo.hundredPoint), 1);
+
+      if (_ratio >= 0.5) {
+        if (!this.scene.steam.isSteaming) {
+          this.scene.steam.startSteam();
+        }
+
+        this.scene.steam.setIntensity((_ratio - 0.5) * 2);
+      }
     }
   }
 }

@@ -19,7 +19,9 @@ export default class objSteam {
       lifespan: {min: 1500, max: 2500},
       scale: {start: 0.5, end: 1},
       rotate: {min: -90, max: 90},
-      alpha: {start: 0.75, end: 0}
+      alpha: {start: 0.75, end: 0},
+      maxParticles: 50,
+      frequency: 1000/15
     };
 
     this.emitterL = this.clouds.createEmitter({
@@ -32,18 +34,42 @@ export default class objSteam {
       x: appWidth,
       angle: {min: 90, max: 270}
     });
+
+    this.setIntensity(0);
+  }
+
+  setIntensity = (intensity) => {
+    if (intensity === -1) {
+      this.emitterL.setAlpha({start: 0.75, end: 0});
+      this.emitterR.setAlpha({start: 0.75, end: 0});
+      this.emitterL.setFrequency(1000/30);
+      this.emitterR.setFrequency(1000/30);
+    } 
+    else {
+      this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
+      this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
+
+      //const _freq = 1000 - (1000 - 1000/30) * intensity;
+
+      //this.emitterL.setFrequency(_freq);
+      //this.emitterR.setFrequency(_freq);
+    }
   }
 
   startSteam = () => {
-    this.emitterL.start();
-    this.emitterR.start();
-    this.isSteaming = true;
+    if (!this.isSteaming) {
+      this.emitterL.start();
+      this.emitterR.start();
+      this.isSteaming = true;
+    }
   }
 
   stopSteam = () => {
-    this.emitterL.stop();
-    this.emitterR.stop();    
-    this.isSteaming = false;
+    if (this.isSteaming) {
+      this.emitterL.stop();
+      this.emitterR.stop();    
+      this.isSteaming = false;
+    }
   }
 
   fadeOut = () => {
