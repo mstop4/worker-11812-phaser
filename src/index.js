@@ -5,6 +5,7 @@ import Stats from 'stats.js';
 import scnLoading from './scenes/scnLoading';
 import scnTitle from './scenes/scnTitle';
 import scnMain from './scenes/scnMain';
+import scnGameOver from './scenes/scnGameOver';
 import * as gameConfig from './gameConfig.js';
 
 const config = {
@@ -12,7 +13,8 @@ const config = {
   scene: [
     scnLoading,
     scnTitle,
-    scnMain
+    scnMain,
+    scnGameOver
   ],
   height: gameConfig.appHeight,
   width: gameConfig.appWidth,

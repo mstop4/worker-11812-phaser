@@ -50,7 +50,7 @@ export default class scnLoading extends Phaser.Scene {
       },
 
       active: () => {
-        this.scene.start('scnTitle');
+        this.scene.start('scnGameOver');
       }
     });
   }
