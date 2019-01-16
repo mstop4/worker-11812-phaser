@@ -11,13 +11,13 @@ const meterFrontInfo = {
 export default class objMeter {
   constructor(scene, x, y) {
     this.scene = scene;
-    /*this.x = x;
-    this.y = y;*/
     this.progress = 0;
     this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
     this.isFlashing = false;
 
-    this.meterBack = scene.add.image(x, y, 'sprMeterBack');
+    scene.add.image(x, y, 'sprMeterBack');
+    scene.add.image(x - 232, y - 264, 'sprZap');
+    scene.add.image(x + 232, y - 264, 'sprZap').setScale(-1.0, 1.0);
     this.meterFront = scene.add.sprite(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront1');
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint, 64, meterFrontInfo.height);
   }

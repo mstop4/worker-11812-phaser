@@ -50,12 +50,6 @@ export default class objClock {
       this.lightShutoffTimers.push(-1);
       this.lightCriticalTimers.push(-1);
     }
-
-    for (let i=0; i<2; i++) {
-      setTimeout(() => {
-        this.toggleLight(this.getFreeLight(), lightState.on);
-      }, 500 + i*250 + intRandomRange(0, 500));
-    }
   }
 
   createHands = () => {
@@ -126,6 +120,14 @@ export default class objClock {
         fill: '#000'
       });
       this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/numLights);
+    }
+  }
+
+  startGame = () => {
+    for (let i=0; i<2; i++) {
+      setTimeout(() => {
+        this.toggleLight(this.getFreeLight(), lightState.on);
+      }, 500 + i*250 + intRandomRange(0, 500));
     }
   }
 

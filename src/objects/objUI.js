@@ -7,7 +7,8 @@ export default class objUI {
     this.score = 0;
     this.time = 0;
     this.timeBuffer = 0;
-    this.refTime = Date.now();
+    this.refTime = 0;
+    this.timerRunning = false;
 
     this.scoreLabel = scene.add.text(12, 12, 'Score', {
       fontFamily: 'Fondamento',
@@ -23,7 +24,7 @@ export default class objUI {
       fill: '#000'
     }).setOrigin(0,1.0);
 
-    this.timeValue = scene.add.bitmapText(8, appHeight-36, 'fntMetroNums', this.time).setOrigin(0,1.0);
+    this.timeValue = scene.add.bitmapText(8, appHeight-36, 'fntMetroNums', '0:00:00').setOrigin(0,1.0);
   }
 
   pauseTimer = () => {
@@ -35,13 +36,20 @@ export default class objUI {
   }
 
   updateTimer = () => {
-    this.time = Math.floor((Date.now() - this.refTime + this.timeBuffer) / 1000);
-    const _formattedTime = formatTime(this.time);
-    this.timeValue.setText(`${_formattedTime.hours}:${_formattedTime.minutes}:${_formattedTime.seconds}`);
+    if (this.timerRunning) {
+      this.time = Math.floor((Date.now() - this.refTime + this.timeBuffer) / 1000);
+      const _formattedTime = formatTime(this.time);
+      this.timeValue.setText(`${_formattedTime.hours}:${_formattedTime.minutes}:${_formattedTime.seconds}`);
+    }
   }
 
   updateScore = (delta) => {
     this.score += delta;
     this.scoreValue.setText(this.score);
+  }
+
+  startGame = () => {
+    this.refTime = Date.now();
+    this.timerRunning = true;
   }
 }

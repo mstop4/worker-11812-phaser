@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appWidth, appHeight } from '../gameConfig';
+import { appWidth, appHeight, transitionTime } from '../gameConfig';
 
 const center = { 
   x: appWidth / 2,
@@ -77,6 +77,6 @@ export default class objSteam {
   }
 
   fadeOut = () => {
-    this.scene.cameras.main.fade(2000, 255, 255, 255);
+    this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
   }
 }
