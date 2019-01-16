@@ -15,9 +15,10 @@ export default class objMeter {
     this.y = y;*/
     this.progress = 0;
     this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
+    this.isFlashing = false;
 
     this.meterBack = scene.add.image(x, y, 'sprMeterBack');
-    this.meterFront = scene.add.image(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront');
+    this.meterFront = scene.add.sprite(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront1');
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint, 64, meterFrontInfo.height);
   }
 
@@ -33,6 +34,11 @@ export default class objMeter {
 
     else {
       const _ratio = Math.min(this.progress / (meterFrontInfo.zeroPoint - meterFrontInfo.hundredPoint), 1);
+
+      if (_ratio >= 1.0 && !this.isFlashing) {
+        this.meterFront.play('meterFlash', true);
+        this.isFlashing = true;
+      }
 
       if (_ratio >= 0.5) {
         if (!this.scene.steam.isSteaming) {

@@ -20,16 +20,6 @@ export default class scnMain extends Phaser.Scene {
   }
 
   create = () => {
-    this.anims.create({
-      key: 'flash',
-      frames: [
-        { key: 'sprLightOff' },
-        { key: 'sprLightOn' },
-      ],
-      frameRate: 12,
-      repeat: -1
-    });
-
     this.input.addPointer();
     this.cameras.main.setBackgroundColor('#687D64');
     

@@ -152,7 +152,7 @@ export default class objClock {
       }
 
       case 2: {
-        this.lights.getFirstNth(index+1, true).play('flash', true);
+        this.lights.getFirstNth(index+1, true).play('lightFlash', true);
         break;
       }
       }

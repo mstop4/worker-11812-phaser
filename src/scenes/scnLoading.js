@@ -12,7 +12,8 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprHand', 'assets/sprites/hand1.png');
     this.load.image('sprCap', 'assets/sprites/cap.png');
     this.load.image('sprMeterBack', 'assets/sprites/meter.png');
-    this.load.image('sprMeterFront', 'assets/sprites/meter2.png');
+    this.load.image('sprMeterFront1', 'assets/sprites/meter2.png');
+    this.load.image('sprMeterFront2', 'assets/sprites/meter3.png');
     this.load.image('sprCloud', 'assets/sprites/cloud.png');
     this.load.bitmapFont('fntMetroNums', 'assets/fonts/digits.png', 'assets/fonts/digits.xml');
 
@@ -23,6 +24,26 @@ export default class scnLoading extends Phaser.Scene {
   }
 
   create = () => {
+    this.anims.create({
+      key: 'lightFlash',
+      frames: [
+        { key: 'sprLightOff' },
+        { key: 'sprLightOn' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'meterFlash',
+      frames: [
+        { key: 'sprMeterFront1' },
+        { key: 'sprMeterFront2' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
     WebFont.load({      //eslint-disable-line no-undef
       google: {
         families: ['Amarante', 'Fondamento']
