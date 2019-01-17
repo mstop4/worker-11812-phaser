@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
+import { setupButton } from '../helpers/button';
 
 export default class scnGameOver extends Phaser.Scene {
   constructor() {
@@ -14,36 +15,40 @@ export default class scnGameOver extends Phaser.Scene {
   }
 
   create = () => {
-    this.cameras.main.setBackgroundColor('#000');
+    this.cameras.main.setBackgroundColor('#687D64');
     this.cameras.main.fadeIn(transitionTime, 255, 255, 255);
+    this.canClick = false;
+    setTimeout(() => this.canClick = true, transitionTime);
 
     this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
-      fontFamily: 'Amarante',
+      fontFamily: 'Fondamento',
       fontSize: '128px', 
-      fill: '#FFF'
+      fill: '#000'
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.25, appHeight * 0.525, `Score: ${this.score}`, {
-      fontFamily: 'Amarante',
+      fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#FFF'
+      fill: '#000'
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.75, appHeight * 0.525, `Time: ${this.hours}:${this.minutes}:${this.seconds}`, {
-      fontFamily: 'Amarante',
+      fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#FFF'
+      fill: '#000'
     }).setOrigin(0.5, 0.5);  
 
-    this.add.text(appCenter.x, appHeight * 0.8, 'Click to restart', {
-      fontFamily: 'Amarante',
+    const _retry = this.add.text(appCenter.x, appHeight * 0.8, 'Retry', {
+      fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#FFF'
-    }).setOrigin(0.5, 0.5);      
+      fill: '#000'
+    });
 
-    this.input.on('pointerdown', () => {
-      this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-      setTimeout(() => this.scene.start('scnMain'), transitionTime + 500);
+    setupButton(_retry, () => {
+      if (this.canClick) {
+        this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
+        setTimeout(() => this.scene.start('scnMain'), transitionTime + 500);
+      }
     });
   }
 }

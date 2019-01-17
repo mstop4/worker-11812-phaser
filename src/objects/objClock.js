@@ -19,7 +19,7 @@ export default class objClock {
     this.x = x;
     this.y = y;
 
-    this.scene.add.image(x, y, 'sprBack');
+    this.scene.add.image(x, y, 'sprClockBack');
     this.createLights();
     this.createLabels();
     this.createHands();

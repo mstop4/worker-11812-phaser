@@ -17,8 +17,10 @@ export default class objMeter {
 
     scene.add.image(x, y + 13, 'sprMeterHalf');
     scene.add.image(x, y, 'sprMeterBack');
-    scene.add.image(x - 232, y - 264, 'sprZap');
-    scene.add.image(x + 232, y - 264, 'sprZap').setScale(-1.0, 1.0);
+    scene.add.image(x - 216, y - 264, 'sprZap');
+    scene.add.image(x + 216, y - 264, 'sprZap').setScale(-1.0, 1.0);
+    scene.add.image(x - 120, y - 56, 'sprZap2');
+    scene.add.image(x + 120, y - 56, 'sprZap2').setScale(-1.0, 1.0);
     this.meterFront = scene.add.sprite(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront1');
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint, 64, meterFrontInfo.height);
   }

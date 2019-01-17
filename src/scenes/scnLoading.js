@@ -13,7 +13,7 @@ export default class scnLoading extends Phaser.Scene {
       fill: '#FFF'
     }).setOrigin(0.5, 0.5);
 
-    this.load.image('sprBack', 'assets/sprites/back.png');
+    this.load.image('sprClockBack', 'assets/sprites/back.png');
     this.load.image('sprLightOff', 'assets/sprites/lightOff.png');
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
     this.load.image('sprHand', 'assets/sprites/hand1.png');
@@ -23,6 +23,7 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprMeterFront2', 'assets/sprites/meter3.png');
     this.load.image('sprMeterHalf', 'assets/sprites/meter4.png');
     this.load.image('sprZap', 'assets/sprites/zap.png');
+    this.load.image('sprZap2', 'assets/sprites/zap2.png');
     this.load.image('sprCloud', 'assets/sprites/cloud.png');
     this.load.bitmapFont('fntMetroNums', 'assets/fonts/digits.png', 'assets/fonts/digits.xml');
 
