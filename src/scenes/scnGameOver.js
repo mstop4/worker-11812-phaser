@@ -37,7 +37,7 @@ export default class scnGameOver extends Phaser.Scene {
 
     this.add.text(appCenter.x, appHeight * 0.8, 'Click to restart', {
       fontFamily: 'Amarante',
-      fontSize: '96px', 
+      fontSize: '48px', 
       fill: '#FFF'
     }).setOrigin(0.5, 0.5);      
 

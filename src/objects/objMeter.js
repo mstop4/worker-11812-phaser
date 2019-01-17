@@ -15,6 +15,7 @@ export default class objMeter {
     this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
     this.isFlashing = false;
 
+    scene.add.image(x, y + 13, 'sprMeterHalf');
     scene.add.image(x, y, 'sprMeterBack');
     scene.add.image(x - 232, y - 264, 'sprZap');
     scene.add.image(x + 232, y - 264, 'sprZap').setScale(-1.0, 1.0);
