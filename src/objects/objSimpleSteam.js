@@ -54,7 +54,6 @@ export default class objSimpleSteam {
     this.clouds.tilePositionY = (this.clouds.tilePositionY + cloudConfig.ySpeed) % cloudConfig.yMax;
   }
 
-
   destroy = () => {
     this.clouds.destroy();
     this.clouds = null;

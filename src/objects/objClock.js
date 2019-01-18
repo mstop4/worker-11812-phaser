@@ -225,4 +225,19 @@ export default class objClock {
       this.freeLights.push(_free);
     }
   }
+
+  destroy = () => {
+    this.lights.destroy();
+    this.lights = null;
+
+    this.hands.forEach(hand => {
+      hand.destroy();
+      hand = null;
+    });
+
+    this.lightLabels.forEach(label => {
+      label.destroy();
+      label = null;
+    });
+  }
 }
