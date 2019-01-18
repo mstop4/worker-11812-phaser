@@ -69,6 +69,7 @@ export default class scnMain extends Phaser.Scene {
     this.sceneOver = true;
     setTimeout(() => {
       this.audioManager.stopSound(this.bgm);
+      this.steam.destroy();
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
     }, 5000);
   }

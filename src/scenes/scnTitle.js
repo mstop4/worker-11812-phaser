@@ -14,7 +14,7 @@ export default class scnLoading extends Phaser.Scene {
 
     this.steam = new objSteam(this);
     this.steam.startSteam();
-    this.steam.setIntensity(0.5);
+    this.steam.setIntensity(0.5, true);
 
     this.add.text(appCenter.x, appHeight * 0.25, 'Worker 11812', {
       fontFamily: 'Fondamento',
@@ -43,21 +43,30 @@ export default class scnLoading extends Phaser.Scene {
     setupButton(_start, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime/2, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime/2 + 250);
+        setTimeout(() => {
+          this.steam.destroy();
+          this.scene.start('scnMain');
+        }, transitionTime/2 + 250);
       }
     });
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime/4 + 250);
+        setTimeout(() => {
+          this.steam.destroy();
+          this.scene.start('scnMain');
+        }, transitionTime/2 + 250);
       }
     });
 
     setupButton(_credits, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime/4 + 250);
+        setTimeout(() => {
+          this.steam.destroy();
+          this.scene.start('scnMain');
+        }, transitionTime/2 + 250);
       }
     });
 

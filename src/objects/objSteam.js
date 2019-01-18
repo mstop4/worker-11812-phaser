@@ -10,6 +10,7 @@ export default class objSteam {
   constructor(scene) {
     this.scene = scene;
     this.isSteaming = false;
+    this.intensityThrottled = false;
 
     this.clouds = scene.add.particles('sprCloud');
 
@@ -42,25 +43,30 @@ export default class objSteam {
       angle: {min: 90, max: 270}
     }).setDeathZone(_emitterDeathZone);
 
-    this.setIntensity(0.0);
+    this.setIntensity(0.0, true);
   }
 
-  setIntensity = (intensity) => {
-    if (intensity === -1) {
-      this.emitterL.setAlpha({start: 0.75, end: 0});
-      this.emitterR.setAlpha({start: 0.75, end: 0});
-      this.emitterL.setFrequency(1000/30);
-      this.emitterR.setFrequency(1000/30);
-    } 
-    
-    else {
-      this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
-      this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
+  setIntensity = (intensity, force) => {
+    if (!this.intensityThrottled || force) {
+      if (intensity === -1) {
+        this.emitterL.setAlpha({start: 0.75, end: 0});
+        this.emitterR.setAlpha({start: 0.75, end: 0});
+        this.emitterL.setFrequency(1000/30);
+        this.emitterR.setFrequency(1000/30);
+      } 
+      
+      else {
+        this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
+        this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
 
-      const _freq = 500 - (500 - 1000/15) * intensity;
+        const _freq = 500 - (500 - 1000/15) * intensity;
 
-      this.emitterL.frequency = _freq;
-      this.emitterR.frequency = _freq;
+        this.emitterL.frequency = _freq;
+        this.emitterR.frequency = _freq;
+
+        this.intensityThrottled = true;
+        setTimeout(() => this.intensityThrottled = false, 250);
+      }
     }
   }
 
@@ -78,5 +84,9 @@ export default class objSteam {
 
   fadeOut = () => {
     this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
+  }
+
+  destroy = () => {
+    this.clouds.destroy();
   }
 }
