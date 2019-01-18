@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
 import { setupButton } from '../helpers/button';
-import objSteam from '../objects/objSteam';
+import objSteam from '../objects/objSimpleSteam';
 
 export default class scnLoading extends Phaser.Scene {
   constructor() {
@@ -74,5 +74,9 @@ export default class scnLoading extends Phaser.Scene {
     setTimeout(() => {
       this.canClick = true;
     }, transitionTime + 250);
+  }
+
+  update = () => {
+    this.steam.update();
   }
 }

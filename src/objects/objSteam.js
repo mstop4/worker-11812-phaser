@@ -1,10 +1,5 @@
 import Phaser from 'phaser';
-import { appWidth, appHeight, transitionTime } from '../gameConfig';
-
-const center = { 
-  x: appWidth / 2,
-  y: appHeight / 2
-};
+import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
 
 export default class objSteam {
   constructor(scene) {
@@ -16,7 +11,7 @@ export default class objSteam {
 
     const _emitterBaseConfig = {
       on: false,
-      y: center.y,
+      y: appCenter.y,
       speed: 400,
       lifespan: {min: 1500, max: 2500},
       scale: {start: 0.5, end: 1},
@@ -86,7 +81,10 @@ export default class objSteam {
     this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
   }
 
+  update = () => {}
+
   destroy = () => {
     this.clouds.destroy();
+    this.clouds = null;
   }
 }

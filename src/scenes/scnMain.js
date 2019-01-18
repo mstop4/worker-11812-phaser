@@ -6,7 +6,7 @@ import objAudioManager from '../objects/objAudioManager';
 import objClock from '../objects/objClock';
 import objMeter from '../objects/objMeter';
 import objUI from '../objects/objUI';
-import objSteam from '../objects/objSteam';
+import objSteam from '../objects/objSimpleSteam';
 
 const center = { 
   x: appWidth / 2,
@@ -52,6 +52,8 @@ export default class scnMain extends Phaser.Scene {
   }
 
   update = () => {
+    this.steam.update();
+
     if (!this.sceneOver) {
       this.clock.checkHands();
       this.ui.updateTimer();
