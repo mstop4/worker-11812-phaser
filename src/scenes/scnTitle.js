@@ -22,13 +22,19 @@ export default class scnLoading extends Phaser.Scene {
       fill: '#000'
     }).setOrigin(0.5, 0.5);
 
-    const _start = this.add.text(appWidth * 0.25, appHeight * 0.75, 'Begin', {
+    const _start = this.add.text(appCenter.x, appHeight * 0.6, 'Begin', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
       fill: '#000'
     });
 
-    const _howToPlay = this.add.text(appWidth * 0.75, appHeight * 0.75, 'How to Play', {
+    const _howToPlay = this.add.text(appWidth * 0.35, appHeight * 0.75, 'How to Play', {
+      fontFamily: 'Fondamento',
+      fontSize: '48px', 
+      fill: '#000'
+    });
+
+    const _credits = this.add.text(appWidth * 0.65, appHeight * 0.75, 'Credits', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
       fill: '#000'
@@ -43,8 +49,15 @@ export default class scnLoading extends Phaser.Scene {
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
-        this.cameras.main.fadeOut(transitionTime/2, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime/2 + 250);
+        this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
+        setTimeout(() => this.scene.start('scnMain'), transitionTime/4 + 250);
+      }
+    });
+
+    setupButton(_credits, () => {
+      if (this.canClick) {
+        this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
+        setTimeout(() => this.scene.start('scnMain'), transitionTime/4 + 250);
       }
     });
 

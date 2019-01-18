@@ -26,12 +26,12 @@ module.exports = {
             presets: ['@babel/env']
           }
         }
-      },
-
-      {
-        test: [/\.vert$/, /\.frag$/ ],
-        use: 'raw-loader'
       }
+
+      // {
+      //   test: [/\.vert$/, /\.frag$/ ],
+      //   use: 'raw-loader'
+      // }
     ]
   },
 
