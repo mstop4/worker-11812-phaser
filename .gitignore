@@ -1,6 +1,5 @@
 node_modules/
 build/
 dist/
-src/assets/audio/music/
 .DS_Store
 sh.exe.stackdump
