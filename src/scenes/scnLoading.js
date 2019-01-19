@@ -15,7 +15,9 @@ export default class scnLoading extends Phaser.Scene {
 
     this.load.image('sprClockBack', 'assets/sprites/back.png');
     this.load.image('sprLightOff', 'assets/sprites/lightOff.png');
+    this.load.image('sprLightOffSp', 'assets/sprites/lightOffSp.png');
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
+    this.load.image('sprLightOnSp', 'assets/sprites/lightOnSp.png');
     this.load.image('sprHand', 'assets/sprites/hand1.png');
     this.load.image('sprCap', 'assets/sprites/cap.png');
     this.load.image('sprMeterBack', 'assets/sprites/meter.png');
@@ -35,7 +37,7 @@ export default class scnLoading extends Phaser.Scene {
 
   create = () => {
     this.anims.create({
-      key: 'lightFlash',
+      key: 'anLightFlash',
       frames: [
         { key: 'sprLightOff' },
         { key: 'sprLightOn' },
@@ -45,7 +47,17 @@ export default class scnLoading extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'meterFlash',
+      key: 'anLightFlashSp',
+      frames: [
+        { key: 'sprLightOffSp' },
+        { key: 'sprLightOnSp' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'anMeterFlash',
       frames: [
         { key: 'sprMeterFront1' },
         { key: 'sprMeterFront2' },

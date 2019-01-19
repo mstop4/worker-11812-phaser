@@ -12,6 +12,7 @@ export default class objMeter {
   constructor(scene, x, y) {
     this.scene = scene;
     this.progress = 0;
+    this.actualProgress = 0;
     this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
     this.isFlashing = false;
 
@@ -26,7 +27,17 @@ export default class objMeter {
   }
 
   updateMeter = (delta) => {
-    this.progress = Math.min(this.progress + delta, this.maxProgress);
+    this.actualProgress = Math.min(this.actualProgress  + delta, this.maxProgress);
+    const _diff = this.actualProgress - this.progress;
+
+    if (Math.abs(_diff) < 1) {
+      this.progress = this.actualProgress;
+    }
+
+    else {
+      this.progress += _diff / 8;
+    }
+
     this.meterFront.setCrop(0, meterFrontInfo.zeroPoint - this.progress, 64, meterFrontInfo.height);
 
     if (this.progress >= this.maxProgress && !this.scene.sceneOver) {
@@ -39,7 +50,7 @@ export default class objMeter {
       const _ratio = Math.min(this.progress / (meterFrontInfo.zeroPoint - meterFrontInfo.hundredPoint), 1);
 
       if (_ratio >= 1.0 && !this.isFlashing) {
-        this.meterFront.play('meterFlash', true);
+        this.meterFront.play('anMeterFlash', true);
         this.isFlashing = true;
       }
 

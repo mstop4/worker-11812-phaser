@@ -10,7 +10,9 @@ const handPointingThreshold = 3;
 const lightState = {
   off: 0,
   on: 1,
-  flash: 2
+  flash: 2,
+  onSp: 3,
+  flashSp: 4
 };
 
 export default class objClock {
@@ -18,6 +20,7 @@ export default class objClock {
     this.scene = scene;
     this.x = x;
     this.y = y;
+    this.turnsUntilSp = 5 + intRandomRange(0, 5);
 
     this.scene.add.image(x, y, 'sprClockBack');
     this.createLights();
@@ -132,12 +135,12 @@ export default class objClock {
   }
 
   toggleLight = (index, state) => {
-    if (state >= 0 && state <= 2) {
+    if (state >= lightState.off && state <= lightState.flashSp) {
       this.lightStates[index] = state;
 
       switch (state) {
 
-      case 0: {
+      case lightState.off: {
         const _light = this.lights.getFirstNth(index+1, true);
         _light.setTexture('sprLightOff');
         _light.anims.stop(null, true);
@@ -146,17 +149,26 @@ export default class objClock {
         break;
       }
 
-      case 1: {
+      case lightState.on:
         this.lights.getFirstNth(index+1, true).setTexture('sprLightOn');
         this.lightShutoffTimers[index] = this.lightShutoffTime;
         this.lightCriticalTimers[index] = this.lightCriticalTime;
         break;
-      }
 
-      case 2: {
-        this.lights.getFirstNth(index+1, true).play('lightFlash', true);
+      case lightState.flash:
+        this.lights.getFirstNth(index+1, true).play('anLightFlash', true);
         break;
-      }
+
+      case lightState.onSp:
+        this.lights.getFirstNth(index+1, true).setTexture('sprLightOnSp');
+        this.lightShutoffTimers[index] = this.lightShutoffTime;
+        this.lightCriticalTimers[index] = this.lightCriticalTime;
+        break;
+
+      case lightState.flashSp:
+        this.lights.getFirstNth(index+1, true).play('anLightFlashSp', true);
+        break;
+
       }
     }
   }
@@ -179,7 +191,17 @@ export default class objClock {
         }
         break;
 
+      case lightState.onSp:
+        this.lightCriticalTimers[i]--;
+        
+        if (this.lightCriticalTimers[i] === 0) {
+          this.lightCriticalTimers[i] = -1;
+          this.toggleLight(i, lightState.flashSp);
+        }
+        break;
+
       case lightState.flash:
+      case lightState.flashSp:
         meterDelta += 0.1;
         break;
       }
@@ -191,14 +213,29 @@ export default class objClock {
           this.lightShutoffTimers[i]--;
 
           if (this.lightShutoffTimers[i] === 0) {
+            if (this.lightStates[i] >= lightState.onSp) {
+              this.scene.meter.updateMeter(-52.1);
+            }
+
             this.toggleLight(i, lightState.off);
             this.scene.ui.updateScore(1);
             this.restockFreeLight();
 
-            setTimeout(() => {
-              this.toggleLight(this.getFreeLight(), lightState.on);
-            }, 500 + intRandomRange(0, 500));
+            if (this.turnsUntilSp <= 0) {
+              this.turnsUntilSp = 5 + intRandomRange(0, 5);
 
+              setTimeout(() => {
+                this.toggleLight(this.getFreeLight(), lightState.onSp);
+              }, 500 + intRandomRange(0, 500));
+            }
+            
+            else {
+              this.turnsUntilSp--;
+
+              setTimeout(() => {
+                this.toggleLight(this.getFreeLight(), lightState.on);
+              }, 500 + intRandomRange(0, 500));
+            }
           }
 
           break;
