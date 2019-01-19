@@ -78,7 +78,7 @@ export default class objSteam {
   }
 
   fadeOut = () => {
-    this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
+    this.scene.cameras.main.fadeOut(transitionTime / 2, 255, 255, 255);
   }
 
   update = () => {}

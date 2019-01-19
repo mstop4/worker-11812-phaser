@@ -32,7 +32,7 @@ export default class objMeter {
     if (this.progress >= this.maxProgress && !this.scene.sceneOver) {
       this.scene.setGameOver();
       this.scene.steam.setIntensity(-1, true);
-      setTimeout(this.scene.steam.fadeOut, 1000);
+      setTimeout(this.scene.steam.fadeOut, 500);
     }
 
     else {
