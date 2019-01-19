@@ -6,7 +6,7 @@ import objAudioManager from '../objects/objAudioManager';
 import objClock from '../objects/objClock';
 import objMeter from '../objects/objMeter';
 import objUI from '../objects/objUI';
-import objSteam from '../objects/objSteam';
+import objSteam from '../objects/objSimpleSteam';
 
 const center = { 
   x: appWidth / 2,
@@ -52,6 +52,8 @@ export default class scnMain extends Phaser.Scene {
   }
 
   update = () => {
+    this.steam.update();
+
     if (!this.sceneOver) {
       this.clock.checkHands();
       this.ui.updateTimer();
@@ -60,7 +62,7 @@ export default class scnMain extends Phaser.Scene {
     else {
       if (this.bgmVolume > 0) {
         this.audioManager.setVolume(this.bgm, this.bgmVolume);
-        this.bgmVolume = Math.max(0, this.bgmVolume - 1/(4*60));
+        this.bgmVolume = Math.max(0, this.bgmVolume - 1/(2*60));
       }
     }
   }
@@ -69,8 +71,7 @@ export default class scnMain extends Phaser.Scene {
     this.sceneOver = true;
     setTimeout(() => {
       this.audioManager.stopSound(this.bgm);
-      this.steam.destroy();
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
-    }, 5000);
+    }, 2500);
   }
 }

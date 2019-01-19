@@ -15,8 +15,11 @@ export default class scnLoading extends Phaser.Scene {
 
     this.load.image('sprClockBack', 'assets/sprites/back.png');
     this.load.image('sprLightOff', 'assets/sprites/lightOff.png');
+    this.load.image('sprLightOffSp', 'assets/sprites/lightOffSp.png');
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
+    this.load.image('sprLightOnSp', 'assets/sprites/lightOnSp.png');
     this.load.image('sprHand', 'assets/sprites/hand1.png');
+    this.load.image('sprHandS', 'assets/sprites/hand2.png');
     this.load.image('sprCap', 'assets/sprites/cap.png');
     this.load.image('sprMeterBack', 'assets/sprites/meter.png');
     this.load.image('sprMeterFront1', 'assets/sprites/meter2.png');
@@ -24,17 +27,19 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprMeterHalf', 'assets/sprites/meter4.png');
     this.load.image('sprZap', 'assets/sprites/zap.png');
     this.load.image('sprZap2', 'assets/sprites/zap2.png');
-    this.load.image('sprCloud', 'assets/sprites/cloud.png');
+    //this.load.image('sprCloud', 'assets/sprites/cloud.png');
+    this.load.image('sprCloudBack', 'assets/sprites/simplecloud.png');
     this.load.bitmapFont('fntMetroNums', 'assets/fonts/digits.png', 'assets/fonts/digits.xml');
 
-    this.load.audio('musMain', ['assets/audio/music/bgm.mp3']);
+    this.load.audio('musMain', ['assets/audio/music/bgm.ogg', 'assets/audio/music/bgm.mp3', ]);
+    this.load.audio('musTitle', ['assets/audio/music/bgm2.ogg', 'assets/audio/music/bgm2.mp3']);
 
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
   }
 
   create = () => {
     this.anims.create({
-      key: 'lightFlash',
+      key: 'anLightFlash',
       frames: [
         { key: 'sprLightOff' },
         { key: 'sprLightOn' },
@@ -44,7 +49,17 @@ export default class scnLoading extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'meterFlash',
+      key: 'anLightFlashSp',
+      frames: [
+        { key: 'sprLightOffSp' },
+        { key: 'sprLightOnSp' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'anMeterFlash',
       frames: [
         { key: 'sprMeterFront1' },
         { key: 'sprMeterFront2' },

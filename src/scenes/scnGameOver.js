@@ -38,7 +38,7 @@ export default class scnGameOver extends Phaser.Scene {
       fill: '#000'
     }).setOrigin(0.5, 0.5);  
 
-    const _retry = this.add.text(appCenter.x, appHeight * 0.8, 'Retry', {
+    const _retry = this.add.text(appWidth * 0.35, appHeight * 0.8, 'Retry', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
       fill: '#000'
@@ -48,6 +48,19 @@ export default class scnGameOver extends Phaser.Scene {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => this.scene.start('scnMain'), transitionTime + 500);
+      }
+    });
+
+    const _menu = this.add.text(appWidth * 0.65, appHeight * 0.8, 'Main Menu', {
+      fontFamily: 'Fondamento',
+      fontSize: '48px', 
+      fill: '#000'
+    });
+
+    setupButton(_menu, () => {
+      if (this.canClick) {
+        this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
+        setTimeout(() => this.scene.start('scnTitle'), transitionTime + 500);
       }
     });
   }
