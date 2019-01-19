@@ -1,11 +1,14 @@
 import Phaser from 'phaser';
 import { angleDifference, intRandomRange } from '../helpers/math'; 
 
-const lightRadius = 290;
-const labelRadius = 325;
-const numLights = 46;
-const numHands = 3;
-const handPointingThreshold = 3;
+const clockConfig = {
+  lightRadius: 290,
+  labelRadius: 325,
+  numLights: 46,
+  numHands: 3,
+  handPointingThreshold: 3,
+  spDelay: 10
+};
 
 const lightState = {
   off: 0,
@@ -20,7 +23,7 @@ export default class objClock {
     this.scene = scene;
     this.x = x;
     this.y = y;
-    this.turnsUntilSp = 5 + intRandomRange(0, 5);
+    this.turnsUntilSp = clockConfig.spDelay + intRandomRange(0, clockConfig.spDelay);
 
     this.scene.add.image(x, y, 'sprClockBack');
     this.createLights();
@@ -40,13 +43,13 @@ export default class objClock {
 
     this.lights = this.scene.add.group();
 
-    for (let i=0; i<numLights; i++) {
-      const _rad = (90-i*360/numLights) * (Math.PI / 180); 
-      const _offset_x = Math.cos(_rad) * lightRadius;
-      const _offset_y = -Math.sin(_rad) * lightRadius;
+    for (let i=0; i<clockConfig.numLights; i++) {
+      const _rad = (90-i*360/clockConfig.numLights) * (Math.PI / 180); 
+      const _offset_x = Math.cos(_rad) * clockConfig.lightRadius;
+      const _offset_y = -Math.sin(_rad) * clockConfig.lightRadius;
 
       const _light = this.lights.create(this.x + _offset_x, this.y + _offset_y, 'sprLightOff');
-      _light.angle = i*360/numLights;
+      _light.angle = i*360/clockConfig.numLights;
 
       this.lightStates.push(0);
       this.freeLights.push(i);
@@ -61,7 +64,7 @@ export default class objClock {
 
     const _collisonArea = new Phaser.Geom.Rectangle(0, -15, 280, 49);
 
-    for (var i=0; i<numHands; i++) {
+    for (var i=0; i<clockConfig.numHands; i++) {
       this.hands[i] = this.scene.add.image(this.x, this.y, 'sprHand').setInteractive(_collisonArea, Phaser.Geom.Rectangle.Contains);
       this.hands[i].setOrigin((40-25)/300, 0.5);
       this.hands[i].angle = this.handAngles[i];
@@ -91,16 +94,16 @@ export default class objClock {
     }
 
     this.scene.add.image(this.x, this.y, 'sprCap');
-    this.scene.children.bringToTop(this.hands[numHands-1]);
+    this.scene.children.bringToTop(this.hands[clockConfig.numHands-1]);
   }
 
   createLabels = () => {
     this.lightLabels = [];
 
-    for (let i=0; i<numLights; i++) {
-      const _rad = (90-i*360/numLights) * (Math.PI / 180); 
-      const _offset_x = Math.cos(_rad) * labelRadius;
-      const _offset_y = -Math.sin(_rad) * labelRadius;
+    for (let i=0; i<clockConfig.numLights; i++) {
+      const _rad = (90-i*360/clockConfig.numLights) * (Math.PI / 180); 
+      const _offset_x = Math.cos(_rad) * clockConfig.labelRadius;
+      const _offset_y = -Math.sin(_rad) * clockConfig.labelRadius;
       let _text;
 
       switch (i) {
@@ -122,7 +125,7 @@ export default class objClock {
         fontSize: '20px', 
         fill: '#000'
       });
-      this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/numLights);
+      this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/clockConfig.numLights);
     }
   }
 
@@ -176,7 +179,7 @@ export default class objClock {
   checkHands = () => {
     let meterDelta = 0;
 
-    for (let i=0; i<numLights; i++) {
+    for (let i=0; i<clockConfig.numLights; i++) {
 
       switch (this.lightStates[i]) {
       case lightState.off:
@@ -206,10 +209,10 @@ export default class objClock {
         break;
       }
 
-      const _curAngle = (270+i*360/numLights) % 360;
+      const _curAngle = (270+i*360/clockConfig.numLights) % 360;
 
-      for (let j=0; j<numHands; j++) {
-        if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= handPointingThreshold) {
+      for (let j=0; j<clockConfig.numHands; j++) {
+        if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= clockConfig.handPointingThreshold) {
           this.lightShutoffTimers[i]--;
 
           if (this.lightShutoffTimers[i] === 0) {
@@ -222,7 +225,7 @@ export default class objClock {
             this.restockFreeLight();
 
             if (this.turnsUntilSp <= 0) {
-              this.turnsUntilSp = 5 + intRandomRange(0, 5);
+              this.turnsUntilSp = clockConfig.spDelay + intRandomRange(0, clockConfig.spDelay);
 
               setTimeout(() => {
                 this.toggleLight(this.getFreeLight(), lightState.onSp);

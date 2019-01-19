@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appWidth, appHeight, transitionTime } from '../gameConfig';
+import { appWidth, appHeight } from '../gameConfig';
 import { formatTime } from '../helpers/math';
 
 import objAudioManager from '../objects/objAudioManager';
@@ -12,6 +12,8 @@ const center = {
   x: appWidth / 2,
   y: appHeight / 2
 };
+
+const transitionTime = 1000;
 
 export default class scnMain extends Phaser.Scene {
 

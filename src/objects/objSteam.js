@@ -1,5 +1,16 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
+import { appCenter, appWidth, appHeight } from '../gameConfig';
+
+const transitionTime = 1000;
+
+const steamConfig = {
+  minFreq: 500,
+  maxFreq: 1000/15,
+  gameOverFreq: 1000/30,
+  maxAlpha: 0.375,
+  gameOverAlpha: 0.75,
+  throttleInterval: 250
+};
 
 export default class objSteam {
   constructor(scene) {
@@ -44,23 +55,23 @@ export default class objSteam {
   setIntensity = (intensity, force) => {
     if (!this.intensityThrottled || force) {
       if (intensity === -1) {
-        this.emitterL.setAlpha({start: 0.75, end: 0});
-        this.emitterR.setAlpha({start: 0.75, end: 0});
-        this.emitterL.setFrequency(1000/30);
-        this.emitterR.setFrequency(1000/30);
+        this.emitterL.setAlpha({start: steamConfig.gameOverAlpha, end: 0});
+        this.emitterR.setAlpha({start: steamConfig.gameOverAlpha, end: 0});
+        this.emitterL.setFrequency(steamConfig.gameOverFreq);
+        this.emitterR.setFrequency(steamConfig.gameOverFreq);
       } 
       
       else {
-        this.emitterL.setAlpha({start: 0.375 * intensity, end: 0});
-        this.emitterR.setAlpha({start: 0.375 * intensity, end: 0});
+        this.emitterL.setAlpha({start: steamConfig.maxAlpha * intensity, end: 0});
+        this.emitterR.setAlpha({start: steamConfig.maxAlpha * intensity, end: 0});
 
-        const _freq = 500 - (500 - 1000/15) * intensity;
+        const _freq = steamConfig.minFreq - (steamConfig.minFreq - steamConfig.maxFreq) * intensity;
 
         this.emitterL.frequency = _freq;
         this.emitterR.frequency = _freq;
 
         this.intensityThrottled = true;
-        setTimeout(() => this.intensityThrottled = false, 250);
+        setTimeout(() => this.intensityThrottled = false, steamConfig.throttleInterval);
       }
     }
   }
@@ -78,7 +89,7 @@ export default class objSteam {
   }
 
   fadeOut = () => {
-    this.scene.cameras.main.fadeOut(transitionTime / 2, 255, 255, 255);
+    this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
   }
 
   update = () => {}

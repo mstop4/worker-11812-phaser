@@ -1,4 +1,4 @@
-const meterFrontInfo = {
+const meterConfig = {
   x: 0,
   y: 3,
   width: 56,
@@ -13,7 +13,7 @@ export default class objMeter {
     this.scene = scene;
     this.progress = 0;
     this.actualProgress = 0;
-    this.maxProgress = meterFrontInfo.zeroPoint - meterFrontInfo.maxPoint;
+    this.maxProgress = meterConfig.zeroPoint - meterConfig.maxPoint;
     this.isFlashing = false;
 
     scene.add.image(x, y + 13, 'sprMeterHalf');
@@ -22,8 +22,8 @@ export default class objMeter {
     scene.add.image(x + 216, y - 264, 'sprZap').setScale(-1.0, 1.0);
     scene.add.image(x - 120, y - 56, 'sprZap2');
     scene.add.image(x + 120, y - 56, 'sprZap2').setScale(-1.0, 1.0);
-    this.meterFront = scene.add.sprite(x + meterFrontInfo.x, y + meterFrontInfo.y, 'sprMeterFront1');
-    this.meterFront.setCrop(0, meterFrontInfo.zeroPoint, 64, meterFrontInfo.height);
+    this.meterFront = scene.add.sprite(x + meterConfig.x, y + meterConfig.y, 'sprMeterFront1');
+    this.meterFront.setCrop(0, meterConfig.zeroPoint, 64, meterConfig.height);
   }
 
   updateMeter = (delta) => {
@@ -38,7 +38,7 @@ export default class objMeter {
       this.progress += _diff / 8;
     }
 
-    this.meterFront.setCrop(0, meterFrontInfo.zeroPoint - this.progress, 64, meterFrontInfo.height);
+    this.meterFront.setCrop(0, meterConfig.zeroPoint - this.progress, 64, meterConfig.height);
 
     if (this.progress >= this.maxProgress && !this.scene.sceneOver) {
       this.scene.setGameOver();
@@ -47,7 +47,7 @@ export default class objMeter {
     }
 
     else {
-      const _ratio = Math.min(this.progress / (meterFrontInfo.zeroPoint - meterFrontInfo.hundredPoint), 1);
+      const _ratio = Math.min(this.progress / (meterConfig.zeroPoint - meterConfig.hundredPoint), 1);
 
       if (_ratio >= 1.0 && !this.isFlashing) {
         this.meterFront.play('anMeterFlash', true);

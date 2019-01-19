@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
+import { appCenter, appWidth, appHeight } from '../gameConfig';
 import { setupButton } from '../helpers/button';
+
+const transitionTime = 1000;
 
 export default class scnGameOver extends Phaser.Scene {
   constructor() {
@@ -47,7 +49,7 @@ export default class scnGameOver extends Phaser.Scene {
     setupButton(_retry, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime + 500);
+        setTimeout(() => this.scene.start('scnMain'), transitionTime * 1.5);
       }
     });
 
@@ -60,7 +62,7 @@ export default class scnGameOver extends Phaser.Scene {
     setupButton(_menu, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnTitle'), transitionTime + 500);
+        setTimeout(() => this.scene.start('scnTitle'), transitionTime * 1.5);
       }
     });
   }

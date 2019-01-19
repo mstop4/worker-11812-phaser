@@ -4,7 +4,5 @@ module.exports = {
 
   get appCenter() {
     return {x: this.appWidth / 2, y: this.appHeight / 2};
-  },
-
-  transitionTime: 2000
+  }
 };

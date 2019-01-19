@@ -1,8 +1,11 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight, transitionTime } from '../gameConfig';
+import { appCenter, appWidth, appHeight } from '../gameConfig';
 import { setupButton } from '../helpers/button';
 import objSteam from '../objects/objSimpleSteam';
 import objAudioManager from '../objects/objAudioManager';
+
+const startTransitionTime = 1000;
+const subMenuTransitionTime = 500;
 
 export default class scnLoading extends Phaser.Scene {
   constructor() {
@@ -49,40 +52,40 @@ export default class scnLoading extends Phaser.Scene {
     setupButton(_start, () => {
       if (this.canClick) {
         this.sceneOver = true;
-        this.cameras.main.fadeOut(transitionTime/2, 0, 0, 0);
+        this.cameras.main.fadeOut(startTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
           this.scene.start('scnMain');
-        }, transitionTime/2 + 250);
+        }, startTransitionTime * 1.25);
       }
     });
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
         this.sceneOver = true;
-        this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
+        this.cameras.main.fadeOut(subMenuTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
           this.scene.start('scnMain');
-        }, transitionTime/2 + 250);
+        }, subMenuTransitionTime * 1.5);
       }
     });
 
     setupButton(_credits, () => {
       if (this.canClick) {
         this.sceneOver = true;
-        this.cameras.main.fadeOut(transitionTime/4, 0, 0, 0);
+        this.cameras.main.fadeOut(subMenuTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
           this.scene.start('scnMain');
-        }, transitionTime/2 + 250);
+        }, subMenuTransitionTime * 1.5);
       }
     });
 
-    this.cameras.main.fadeIn(transitionTime, 0, 0, 0);
+    this.cameras.main.fadeIn(startTransitionTime, 0, 0, 0);
     setTimeout(() => {
       this.canClick = true;
-    }, transitionTime + 250);
+    }, startTransitionTime * 1.25);
   }
 
   update = () => {

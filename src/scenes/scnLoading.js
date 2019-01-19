@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
-import { appCenter, transitionTime } from '../gameConfig';
+import { appCenter } from '../gameConfig';
+
+const transitionTime = 1000;
 
 export default class scnLoading extends Phaser.Scene {
   constructor() {
@@ -74,10 +76,10 @@ export default class scnLoading extends Phaser.Scene {
       },
 
       active: () => {
-        this.cameras.main.fadeOut(transitionTime / 2, 0, 0, 0);
+        this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => {
           this.scene.start('scnTitle');
-        }, transitionTime / 2 + 250);
+        }, transitionTime * 1.25);
       }
     });
   }
