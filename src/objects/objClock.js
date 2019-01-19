@@ -71,13 +71,13 @@ export default class objClock {
 
       this.scene.input.on('gameobjectover', (pointer, obj) => {
         if (!this.scene.gameOver) {
-          obj.setTint(0xFF0000);
+          obj.setTexture('sprHandS');
         }
       });
 
       this.scene.input.on('gameobjectout', (pointer, obj) => {
         if (!this.scene.gameOver) {
-          obj.clearTint();
+          obj.setTexture('sprHand');
         }
       });
 

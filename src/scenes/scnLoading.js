@@ -19,6 +19,7 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
     this.load.image('sprLightOnSp', 'assets/sprites/lightOnSp.png');
     this.load.image('sprHand', 'assets/sprites/hand1.png');
+    this.load.image('sprHandS', 'assets/sprites/hand2.png');
     this.load.image('sprCap', 'assets/sprites/cap.png');
     this.load.image('sprMeterBack', 'assets/sprites/meter.png');
     this.load.image('sprMeterFront1', 'assets/sprites/meter2.png');
