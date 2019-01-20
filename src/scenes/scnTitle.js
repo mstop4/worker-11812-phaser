@@ -58,7 +58,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnMain');
         }, startTransitionTime * 1.25);
       }
-    });
+    }, '#000', '#FFF');
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
@@ -69,7 +69,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnMain');
         }, subMenuTransitionTime * 1.5);
       }
-    });
+    }, '#000', '#FFF');
 
     setupButton(_credits, () => {
       if (this.canClick) {
@@ -77,10 +77,10 @@ export default class scnLoading extends Phaser.Scene {
         this.cameras.main.fadeOut(subMenuTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
-          this.scene.start('scnMain');
+          this.scene.start('scnCredits');
         }, subMenuTransitionTime * 1.5);
       }
-    });
+    }, '#000', '#FFF');
 
     this.cameras.main.fadeIn(startTransitionTime, 0, 0, 0);
     setTimeout(() => {

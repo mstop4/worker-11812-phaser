@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import GameScalePlugin from 'phaser-plugin-game-scale';
-import Stats from 'stats.js';
+//import Stats from 'stats.js';
 
 import scnLoading from './scenes/scnLoading';
 import scnTitle from './scenes/scnTitle';
+import scnCredits from './scenes/scnCredits';
 import scnMain from './scenes/scnMain';
 import scnGameOver from './scenes/scnGameOver';
 import * as gameConfig from './gameConfig.js';
@@ -13,6 +14,7 @@ const config = {
   scene: [
     scnLoading,
     scnTitle,
+    scnCredits,
     scnMain,
     scnGameOver
   ],
