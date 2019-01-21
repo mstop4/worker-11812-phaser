@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter } from '../gameConfig';
+import { appCenter, themes } from '../gameConfig';
 
 const transitionTime = 1000;
 
@@ -12,7 +12,7 @@ export default class scnLoading extends Phaser.Scene {
     this.add.text(appCenter.x, appCenter.y, 'Loading...', {
       fontFamily: 'Georgia',
       fontSize: '96px', 
-      fill: '#FFF'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);
 
     this.load.image('sprClockBack', 'assets/sprites/back.png');

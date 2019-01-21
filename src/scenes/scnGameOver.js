@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight } from '../gameConfig';
+import { appCenter, appWidth, appHeight, themes } from '../gameConfig';
 import { setupButton } from '../helpers/button';
 
 const transitionTime = 1000;
@@ -25,25 +25,25 @@ export default class scnGameOver extends Phaser.Scene {
     this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
       fontFamily: 'Fondamento',
       fontSize: '128px', 
-      fill: '#FFF'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.25, appHeight * 0.525, `Score: ${this.score}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#FFF'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.75, appHeight * 0.525, `Time: ${this.hours}:${this.minutes}:${this.seconds}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#FFF'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);  
 
     const _retry = this.add.text(appWidth * 0.35, appHeight * 0.8, 'Retry', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#FFF'
+      fill: themes[0].linkColour
     });
 
     setupButton(_retry, () => {
@@ -51,12 +51,12 @@ export default class scnGameOver extends Phaser.Scene {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => this.scene.start('scnMain'), transitionTime * 1.5);
       }
-    }, '#FFF', '#ACA');
+    }, themes[0].linkColour, themes[0].hoverColour);
 
     const _menu = this.add.text(appWidth * 0.65, appHeight * 0.8, 'Main Menu', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#FFF'
+      fill: themes[0].hoverColour
     });
 
     setupButton(_menu, () => {
@@ -64,6 +64,6 @@ export default class scnGameOver extends Phaser.Scene {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => this.scene.start('scnTitle'), transitionTime * 1.5);
       }
-    }, '#FFF', '#ACA');
+    }, themes[0].linkColour, themes[0].hoverColour);
   }
 }

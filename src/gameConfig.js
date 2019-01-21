@@ -4,5 +4,19 @@ module.exports = {
 
   get appCenter() {
     return {x: this.appWidth / 2, y: this.appHeight / 2};
-  }
+  },
+
+  themes: [
+    {
+      textColour: '#FFF',
+      linkColour: '#FFF',
+      hoverColour: '#ACA'
+    },
+
+    {
+      textColour: '#000',
+      linkColour: '#000',
+      hoverColour: '#FFF'
+    }
+  ]  
 };

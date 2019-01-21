@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight } from '../gameConfig';
+import { appCenter, appWidth, appHeight, themes } from '../gameConfig';
 import { setupButton } from '../helpers/button';
 import objSteam from '../objects/objSimpleSteam';
 import objAudioManager from '../objects/objAudioManager';
@@ -28,25 +28,25 @@ export default class scnLoading extends Phaser.Scene {
     this.add.text(appCenter.x, appHeight * 0.25, 'Worker 11812', {
       fontFamily: 'Fondamento',
       fontSize: '96px', 
-      fill: '#000'
+      fill: themes[1].textColour
     }).setOrigin(0.5, 0.5);
 
     const _start = this.add.text(appCenter.x, appHeight * 0.6, 'Begin', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#000'
+      fill: themes[1].linkColour
     });
 
     const _howToPlay = this.add.text(appWidth * 0.35, appHeight * 0.75, 'How to Play', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#000'
+      fill: themes[1].linkColour
     });
 
     const _credits = this.add.text(appWidth * 0.65, appHeight * 0.75, 'Credits', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#000'
+      fill: themes[1].linkColour
     });
 
     setupButton(_start, () => {
@@ -58,7 +58,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnMain');
         }, startTransitionTime * 1.25);
       }
-    }, '#000', '#FFF');
+    }, themes[1].linkColour, themes[1].hoverColour);
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
@@ -69,7 +69,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnMain');
         }, subMenuTransitionTime * 1.5);
       }
-    }, '#000', '#FFF');
+    }, themes[1].linkColour, themes[1].hoverColour);
 
     setupButton(_credits, () => {
       if (this.canClick) {
@@ -80,7 +80,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnCredits');
         }, subMenuTransitionTime * 1.5);
       }
-    }, '#000', '#FFF');
+    }, themes[1].linkColour, themes[1].hoverColour);
 
     this.cameras.main.fadeIn(startTransitionTime, 0, 0, 0);
     setTimeout(() => {
