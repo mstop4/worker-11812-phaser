@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { appCenter, themes } from '../gameConfig';
+import objAudioManager from '../objects/objAudioManager';
 
 const transitionTime = 1000;
 
@@ -31,6 +32,14 @@ export default class scnLoading extends Phaser.Scene {
     this.load.image('sprZap2', 'assets/sprites/zap2.png');
     //this.load.image('sprCloud', 'assets/sprites/cloud.png');
     this.load.image('sprCloudBack', 'assets/sprites/simplecloud.png');
+    this.load.image('sprFigure1', 'assets/sprites/figure-1.png');
+    this.load.image('sprFigure2a', 'assets/sprites/figure-2a.png');
+    this.load.image('sprFigure2b', 'assets/sprites/figure-2b.png');
+    this.load.image('sprFigure3', 'assets/sprites/figure-3.png');
+    this.load.image('sprFigure4', 'assets/sprites/figure-4.png');
+    this.load.image('sprFigure5a', 'assets/sprites/figure-5a.png');
+    this.load.image('sprFigure5b', 'assets/sprites/figure-5b.png');
+
     this.load.bitmapFont('fntMetroNums', 'assets/fonts/digits.png', 'assets/fonts/digits.xml');
 
     this.load.audio('musMain', ['assets/audio/music/bgm.ogg', 'assets/audio/music/bgm.mp3', ]);
@@ -69,6 +78,28 @@ export default class scnLoading extends Phaser.Scene {
       frameRate: 12,
       repeat: -1
     });
+
+    this.anims.create({
+      key: 'anFigure2',
+      frames: [
+        { key: 'sprFigure2a' },
+        { key: 'sprFigure2b' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'anFigure5',
+      frames: [
+        { key: 'sprFigure5a' },
+        { key: 'sprFigure5b' },
+      ],
+      frameRate: 12,
+      repeat: -1
+    });
+
+    this.game.audioManager = new objAudioManager(this.sound);
 
     WebFont.load({      //eslint-disable-line no-undef
       google: {
