@@ -28,6 +28,9 @@ export default class objMeter {
 
   updateMeter = (delta) => {
     this.actualProgress = Math.max(Math.min(this.actualProgress  + delta, this.maxProgress), 0);
+  }
+
+  update = () => {
     const _diff = this.actualProgress - this.progress;
 
     if (Math.abs(_diff) < 1) {
@@ -54,12 +57,24 @@ export default class objMeter {
         this.isFlashing = true;
       }
 
+      else if (_ratio < 1.0 && this.isFlashing) {
+        this.meterFront.setTexture('sprMeterFront1');
+        this.meterFront.anims.stop(null, true);
+        this.isFlashing = false;
+      }
+
       if (_ratio >= 0.5) {
         if (!this.scene.steam.isSteaming) {
           this.scene.steam.startSteam();
         }
 
         this.scene.steam.setIntensity((_ratio - 0.5) * 2, false);
+      }
+
+      else if (_ratio < 0.5) {
+        if (this.scene.steam.isSteaming) {
+          this.scene.steam.stopSteam();
+        }
       }
     }
   }
