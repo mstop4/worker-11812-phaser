@@ -20,7 +20,7 @@ export default class scnGameOver extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#000');
     this.cameras.main.fadeIn(transitionTime, 255, 255, 255);
     this.canClick = false;
-    setTimeout(() => this.canClick = true, transitionTime);
+    this.startInputTimeout = setTimeout(() => this.canClick = true, transitionTime);
 
     this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
       fontFamily: 'Fondamento',
@@ -49,7 +49,10 @@ export default class scnGameOver extends Phaser.Scene {
     setupButton(_retry, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime * 1.5);
+        setTimeout(() => {
+          this.scene.start('scnMain');
+          this.cleanUp();
+        }, transitionTime * 1.5);
       }
     }, themes[0].linkColour, themes[0].hoverColour);
 
@@ -62,8 +65,15 @@ export default class scnGameOver extends Phaser.Scene {
     setupButton(_menu, () => {
       if (this.canClick) {
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnTitle'), transitionTime * 1.5);
+        setTimeout(() => {
+          this.scene.start('scnTitle');
+          this.cleanUp();
+        }, transitionTime * 1.5);
       }
     }, themes[0].linkColour, themes[0].hoverColour);
+  }
+
+  cleanUp = () => {
+    clearTimeout(this.startInputTimeout);
   }
 }

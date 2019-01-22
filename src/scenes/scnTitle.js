@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight, themes } from '../gameConfig';
+import { appCenter, appWidth, appHeight, themes, version } from '../gameConfig';
 import { setupButton } from '../helpers/button';
 import objSteam from '../objects/objSimpleSteam';
 
@@ -28,7 +28,7 @@ export default class scnLoading extends Phaser.Scene {
 
     this.add.text(appCenter.x, appHeight * 0.25, 'Worker 11812', {
       fontFamily: 'Fondamento',
-      fontSize: '96px', 
+      fontSize: '128px', 
       fill: themes[1].textColour
     }).setOrigin(0.5, 0.5);
 
@@ -38,7 +38,7 @@ export default class scnLoading extends Phaser.Scene {
       fill: themes[1].linkColour
     });
 
-    const _howToPlay = this.add.text(appWidth * 0.325, appHeight * 0.75, 'How to Play', {
+    const _howToPlay = this.add.text(appWidth * 0.325, appHeight * 0.75, 'How to Operate', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
       fill: themes[1].linkColour
@@ -49,6 +49,12 @@ export default class scnLoading extends Phaser.Scene {
       fontSize: '56px', 
       fill: themes[1].linkColour
     });
+
+    this.add.text(appWidth, appHeight, `v.${version}`, {
+      fontFamily: 'Fondamento',
+      fontSize: '24px', 
+      fill: themes[1].linkColour
+    }).setOrigin(1,1);
 
     setupButton(_start, () => {
       if (this.canClick) {
