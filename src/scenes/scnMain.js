@@ -63,7 +63,7 @@ export default class scnMain extends Phaser.Scene {
 
     else {
       if (this.bgmVolume > 0) {
-        this.AM.setVolume(this.bgm, this.bgmVolume);
+        this.AM.setVolume(this.AM.bgm, this.bgmVolume);
         this.bgmVolume = Math.max(0, this.bgmVolume - 1/(2*60));
       }
     }
@@ -72,7 +72,7 @@ export default class scnMain extends Phaser.Scene {
   setGameOver = () => {
     this.sceneOver = true;
     setTimeout(() => {
-      this.AM.stopSound(this.bgm);
+      this.AM.stopSound(this.AM.bgm);
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
     }, 2500);
   }

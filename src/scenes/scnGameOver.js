@@ -60,7 +60,7 @@ export default class scnGameOver extends Phaser.Scene {
     const _menu = this.add.text(appWidth * 0.65, appHeight * 0.8, 'Main Menu', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes.dark.hoverColour
+      fill: themes.dark.linkColour
     });
 
     setupButton(_menu, () => {

@@ -1,5 +1,5 @@
 module.exports = {
-  version: '1.0-beta',
+  version: '1.0-rc',
   appWidth: 1280,
   appHeight: 720,
 
