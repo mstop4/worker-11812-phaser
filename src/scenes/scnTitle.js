@@ -59,6 +59,7 @@ export default class scnLoading extends Phaser.Scene {
     setupButton(_start, () => {
       if (this.canClick) {
         this.sceneOver = true;
+        this.canClick = false;
         this.cameras.main.fadeOut(startTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
@@ -69,6 +70,7 @@ export default class scnLoading extends Phaser.Scene {
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(subMenuTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();
@@ -79,6 +81,7 @@ export default class scnLoading extends Phaser.Scene {
 
     setupButton(_credits, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(subMenuTransitionTime, 0, 0, 0);
         setTimeout(() => {
           this.destroy();

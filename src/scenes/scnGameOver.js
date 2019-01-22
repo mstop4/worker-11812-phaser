@@ -48,6 +48,7 @@ export default class scnGameOver extends Phaser.Scene {
 
     setupButton(_retry, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => {
           this.scene.start('scnMain');
@@ -64,6 +65,7 @@ export default class scnGameOver extends Phaser.Scene {
 
     setupButton(_menu, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => {
           this.scene.start('scnTitle');

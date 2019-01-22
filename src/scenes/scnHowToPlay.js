@@ -63,6 +63,7 @@ export default class scnHowToPlay extends Phaser.Scene {
 
     setupButton(_menu, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
         setTimeout(() => {
           this.scene.start('scnTitle');
