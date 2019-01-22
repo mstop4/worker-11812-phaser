@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import { appWidth, appHeight } from '../gameConfig';
 import { formatTime } from '../helpers/math';
 
-import objAudioManager from '../objects/objAudioManager';
 import objClock from '../objects/objClock';
 import objMeter from '../objects/objMeter';
 import objUI from '../objects/objUI';
@@ -27,13 +26,13 @@ export default class scnMain extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#687D64');
     
     this.sceneOver = false;
-    this.audioManager = new objAudioManager(this);
+    this.AM = this.game.audioManager;
     this.meter = new objMeter(this, 1080, center.y);
     this.clock = new objClock(this, center.x - 120, center.y);
     this.steam = new objSteam(this);
     this.ui = new objUI(this);
 
-    this.bgm = this.audioManager.playSound('musMain', true);
+    this.AM.bgm = this.AM.playSound('musMain', true);
     this.bgmVolume = 1;
 
     this.sys.game.events.on('hidden', () => {
@@ -63,7 +62,7 @@ export default class scnMain extends Phaser.Scene {
 
     else {
       if (this.bgmVolume > 0) {
-        this.audioManager.setVolume(this.bgm, this.bgmVolume);
+        this.AM.setVolume(this.bgm, this.bgmVolume);
         this.bgmVolume = Math.max(0, this.bgmVolume - 1/(2*60));
       }
     }
@@ -72,7 +71,7 @@ export default class scnMain extends Phaser.Scene {
   setGameOver = () => {
     this.sceneOver = true;
     setTimeout(() => {
-      this.audioManager.stopSound(this.bgm);
+      this.AM.stopSound(this.bgm);
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
     }, 2500);
   }

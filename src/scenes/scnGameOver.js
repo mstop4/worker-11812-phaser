@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight } from '../gameConfig';
+import { appCenter, appWidth, appHeight, themes } from '../gameConfig';
 import { setupButton } from '../helpers/button';
 
 const transitionTime = 1000;
@@ -17,53 +17,65 @@ export default class scnGameOver extends Phaser.Scene {
   }
 
   create = () => {
-    this.cameras.main.setBackgroundColor('#687D64');
+    this.cameras.main.setBackgroundColor('#000');
     this.cameras.main.fadeIn(transitionTime, 255, 255, 255);
     this.canClick = false;
-    setTimeout(() => this.canClick = true, transitionTime);
+    this.startInputTimeout = setTimeout(() => this.canClick = true, transitionTime);
 
     this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
       fontFamily: 'Fondamento',
       fontSize: '128px', 
-      fill: '#000'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.25, appHeight * 0.525, `Score: ${this.score}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#000'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.75, appHeight * 0.525, `Time: ${this.hours}:${this.minutes}:${this.seconds}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: '#000'
+      fill: themes[0].textColour
     }).setOrigin(0.5, 0.5);  
 
     const _retry = this.add.text(appWidth * 0.35, appHeight * 0.8, 'Retry', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#000'
+      fill: themes[0].linkColour
     });
 
     setupButton(_retry, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnMain'), transitionTime * 1.5);
+        setTimeout(() => {
+          this.scene.start('scnMain');
+          this.cleanUp();
+        }, transitionTime * 1.5);
       }
-    });
+    }, themes[0].linkColour, themes[0].hoverColour);
 
     const _menu = this.add.text(appWidth * 0.65, appHeight * 0.8, 'Main Menu', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: '#000'
+      fill: themes[0].hoverColour
     });
 
     setupButton(_menu, () => {
       if (this.canClick) {
+        this.canClick = false;
         this.cameras.main.fadeOut(transitionTime, 0, 0, 0);
-        setTimeout(() => this.scene.start('scnTitle'), transitionTime * 1.5);
+        setTimeout(() => {
+          this.scene.start('scnTitle');
+          this.cleanUp();
+        }, transitionTime * 1.5);
       }
-    });
+    }, themes[0].linkColour, themes[0].hoverColour);
+  }
+
+  cleanUp = () => {
+    clearTimeout(this.startInputTimeout);
   }
 }
