@@ -26,7 +26,7 @@ module.exports = {
             presets: ['@babel/env']
           }
         }
-      }
+      },
 
       // {
       //   test: [/\.vert$/, /\.frag$/ ],
@@ -54,7 +54,8 @@ module.exports = {
       { from: './src/assets/sprites', to: 'assets/sprites'},
       { from: './src/assets/fonts', to: 'assets/fonts'},
       { from: './src/assets/audio', to: 'assets/audio'},
-      { from: './src/index.html', to: 'index.html'}
+      { from: './src/index.html', to: 'index.html'},
+      { from: './src/index.css', to: 'index.css'},
     ]),
   ],
 
