@@ -13,7 +13,7 @@ export default class objUI {
     this.scoreLabel = scene.add.text(12, 12, 'Score', {
       fontFamily: 'Fondamento',
       fontSize: '24px', 
-      fill: themes[1].textColour
+      fill: themes.light.textColour
     });
 
     this.scoreValue = scene.add.bitmapText(8, 32, 'fntMetroNums', this.score);
@@ -21,7 +21,7 @@ export default class objUI {
     this.timeLabel = scene.add.text(12, appHeight-12, 'Time', {
       fontFamily: 'Fondamento',
       fontSize: '24px', 
-      fill: themes[1].textColour
+      fill: themes.light.textColour
     }).setOrigin(0,1.0);
 
     this.timeValue = scene.add.bitmapText(8, appHeight-36, 'fntMetroNums', '0:00:00').setOrigin(0,1.0);

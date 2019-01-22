@@ -13,7 +13,7 @@ export default class scnLoading extends Phaser.Scene {
     this.add.text(appCenter.x, appCenter.y, 'Loading...', {
       fontFamily: 'Georgia',
       fontSize: '96px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0.5);
 
     this.load.image('sprClockBack', 'assets/sprites/back.png');

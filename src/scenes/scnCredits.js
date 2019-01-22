@@ -18,56 +18,56 @@ export default class scnGameOver extends Phaser.Scene {
     this.add.text(appCenter.x, appHeight * 0.075, 'Programming & Art: M.S.T.O.P.', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes[0].linkColour
+      fill: themes.dark.linkColour
     }).setOrigin(0.5, 0);
 
     this.add.text(appCenter.x, appHeight * 0.23, 'Music:', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0);
 
     this.add.text(appCenter.x, appHeight * 0.23 + 72, '"Night in the City"\n"No End in Sight"', {
       fontFamily: 'Fondamento',
       fontSize: '40px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0);
 
     this.add.text(appCenter.x, appHeight * 0.48, 'by: Purple Planet Music', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes[0].textColour,
+      fill: themes.dark.textColour,
       align: 'center'
     }).setOrigin(0.5, 0);
 
     const _pp = this.add.text(appCenter.x, appHeight * 0.48 + 80, 'https://www.purple-planet.com/', {
       fontFamily: 'Fondamento',
       fontSize: '40px', 
-      fill: themes[0].linkColour
+      fill: themes.dark.linkColour
     }).setOrigin(0.5, 0);
 
     setupButton(_pp, () => {
       if (this.canClick) {
         window.open('https://www.purple-planet.com/', '_blank');
       }
-    }, themes[0].linkColour, themes[0].hoverColour);
+    }, themes.dark.linkColour, themes.dark.hoverColour);
 
     const _phaser = this.add.text(appCenter.x, appHeight * 0.75, 'Made with Phaser 3', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes[0].linkColour
+      fill: themes.dark.linkColour
     }).setOrigin(0.5, 0);
 
     setupButton(_phaser, () => {
       if (this.canClick) {
         window.open('https://phaser.io/', '_blank');
       }
-    }, themes[0].linkColour, themes[0].hoverColour);
+    }, themes.dark.linkColour, themes.dark.hoverColour);
 
     const _menu = this.add.text(appCenter.x, appHeight * 0.9, 'Back to Main Menu', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes[0].linkColour
+      fill: themes.dark.linkColour
     }).setOrigin(0.5, 0);
 
     setupButton(_menu, () => {
@@ -79,7 +79,7 @@ export default class scnGameOver extends Phaser.Scene {
           this.cleanUp();
         }, transitionTime * 1.5);
       }
-    }, themes[0].linkColour, themes[0].hoverColour);
+    }, themes.dark.linkColour, themes.dark.hoverColour);
   }
 
   cleanUp = () => {

@@ -25,25 +25,25 @@ export default class scnGameOver extends Phaser.Scene {
     this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
       fontFamily: 'Fondamento',
       fontSize: '128px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.25, appHeight * 0.525, `Score: ${this.score}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0.5);
 
     this.add.text(appWidth * 0.75, appHeight * 0.525, `Time: ${this.hours}:${this.minutes}:${this.seconds}`, {
       fontFamily: 'Fondamento',
       fontSize: '64px', 
-      fill: themes[0].textColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0.5);  
 
     const _retry = this.add.text(appWidth * 0.35, appHeight * 0.8, 'Retry', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes[0].linkColour
+      fill: themes.dark.linkColour
     });
 
     setupButton(_retry, () => {
@@ -55,12 +55,12 @@ export default class scnGameOver extends Phaser.Scene {
           this.cleanUp();
         }, transitionTime * 1.5);
       }
-    }, themes[0].linkColour, themes[0].hoverColour);
+    }, themes.dark.linkColour, themes.dark.hoverColour);
 
     const _menu = this.add.text(appWidth * 0.65, appHeight * 0.8, 'Main Menu', {
       fontFamily: 'Fondamento',
       fontSize: '48px', 
-      fill: themes[0].hoverColour
+      fill: themes.dark.hoverColour
     });
 
     setupButton(_menu, () => {
@@ -72,7 +72,7 @@ export default class scnGameOver extends Phaser.Scene {
           this.cleanUp();
         }, transitionTime * 1.5);
       }
-    }, themes[0].linkColour, themes[0].hoverColour);
+    }, themes.dark.linkColour, themes.dark.hoverColour);
   }
 
   cleanUp = () => {

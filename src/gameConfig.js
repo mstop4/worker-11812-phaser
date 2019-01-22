@@ -7,17 +7,17 @@ module.exports = {
     return {x: this.appWidth / 2, y: this.appHeight / 2};
   },
 
-  themes: [
-    {
+  themes: {
+    dark: {
       textColour: '#FFF',
       linkColour: '#FFF',
       hoverColour: '#ACA'
     },
 
-    {
+    light: {
       textColour: '#000',
       linkColour: '#000',
       hoverColour: '#FFF'
     }
-  ]  
+  }  
 };

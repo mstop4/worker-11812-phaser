@@ -26,34 +26,34 @@ export default class scnLoading extends Phaser.Scene {
       this.AM.bgm = this.AM.playSound('musTitle', true);
     }
 
-    this.add.text(appCenter.x, appHeight * 0.25, 'Worker 11812', {
+    this.add.text(appCenter.x, appHeight * 0.25, 'Worker #11812', {
       fontFamily: 'Fondamento',
       fontSize: '128px', 
-      fill: themes[1].textColour
+      fill: themes.light.textColour
     }).setOrigin(0.5, 0.5);
 
     const _start = this.add.text(appCenter.x, appHeight * 0.6, 'Begin', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes[1].linkColour
+      fill: themes.light.linkColour
     });
 
     const _howToPlay = this.add.text(appWidth * 0.325, appHeight * 0.75, 'How to Operate', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes[1].linkColour
+      fill: themes.light.linkColour
     });
 
     const _credits = this.add.text(appWidth * 0.675, appHeight * 0.75, 'Credits', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes[1].linkColour
+      fill: themes.light.linkColour
     });
 
-    this.add.text(appWidth, appHeight, `v.${version}`, {
+    this.add.text(appWidth - 16, appHeight, `v.${version}`, {
       fontFamily: 'Fondamento',
       fontSize: '24px', 
-      fill: themes[1].linkColour
+      fill: themes.light.linkColour
     }).setOrigin(1,1);
 
     setupButton(_start, () => {
@@ -66,7 +66,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnMain');
         }, startTransitionTime * 1.25);
       }
-    }, themes[1].linkColour, themes[1].hoverColour);
+    }, themes.light.linkColour, themes.light.hoverColour);
 
     setupButton(_howToPlay, () => {
       if (this.canClick) {
@@ -77,7 +77,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnHowToPlay');
         }, subMenuTransitionTime * 1.5);
       }
-    }, themes[1].linkColour, themes[1].hoverColour);
+    }, themes.light.linkColour, themes.light.hoverColour);
 
     setupButton(_credits, () => {
       if (this.canClick) {
@@ -88,7 +88,7 @@ export default class scnLoading extends Phaser.Scene {
           this.scene.start('scnCredits');
         }, subMenuTransitionTime * 1.5);
       }
-    }, themes[1].linkColour, themes[1].hoverColour);
+    }, themes.light.linkColour, themes.light.hoverColour);
 
     this.cameras.main.fadeIn(startTransitionTime, 0, 0, 0);
     setTimeout(() => {
