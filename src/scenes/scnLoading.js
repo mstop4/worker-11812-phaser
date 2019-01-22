@@ -42,7 +42,7 @@ export default class scnLoading extends Phaser.Scene {
 
     this.load.bitmapFont('fntMetroNums', 'assets/fonts/digits.png', 'assets/fonts/digits.xml');
 
-    this.load.audio('musMain', ['assets/audio/music/bgm.ogg', 'assets/audio/music/bgm.mp3', ]);
+    this.load.audio('musMain', ['assets/audio/music/bgm.ogg', 'assets/audio/music/bgm.mp3']);
     this.load.audio('musTitle', ['assets/audio/music/bgm2.ogg', 'assets/audio/music/bgm2.mp3']);
 
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');

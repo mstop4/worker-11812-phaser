@@ -51,9 +51,9 @@ module.exports = {
     }),
 
     new CopyWebPackPlugin([
-      { from: './src/assets/sprites', to: 'assets/sprites', ignore: ['./src/assets/sprites/cloud.png']},
+      { from: './src/assets/sprites', to: 'assets/sprites'},
       { from: './src/assets/fonts', to: 'assets/fonts'},
-      { from: './src/assets/audio', to: 'assets/audio', ignore: ['./src/assets/audio/sfx/']},
+      { from: './src/assets/audio', to: 'assets/audio'},
       { from: './src/index.html', to: 'index.html'}
     ]),
   ],
