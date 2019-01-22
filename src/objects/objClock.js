@@ -261,9 +261,9 @@ export default class objClock {
           break;
         }
       }
-
-      this.scene.meter.updateMeter(meterDelta);
     }
+
+    this.scene.meter.updateMeter(meterDelta);
   }
 
   getFreeLight = () => {
