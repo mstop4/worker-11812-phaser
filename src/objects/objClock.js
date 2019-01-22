@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { angleDifference, intRandomRange } from '../helpers/math'; 
+import { angleDifference, intRandomRange } from '../helpers/math';
+import { gameRules } from '../gameConfig';
 
 const clockConfig = {
   lightRadius: 290,
@@ -7,7 +8,6 @@ const clockConfig = {
   numLights: 46,
   numHands: 3,
   handPointingThreshold: 3,
-  spDelay: 10
 };
 
 const lightState = {
@@ -23,7 +23,9 @@ export default class objClock {
     this.scene = scene;
     this.x = x;
     this.y = y;
-    this.turnsUntilSp = clockConfig.spDelay + intRandomRange(0, clockConfig.spDelay);
+    this.level = 0;
+    this.turnsUntilSp = gameRules.spBulbDelayTurns[this.level] + intRandomRange(0, gameRules.spBulbDelayTurns[this.level]);
+    this.pointsToLevelUp = gameRules.pointsToLevelUp[this.level];
 
     this.scene.add.image(x, y, 'sprClockBack');
     this.createLights();
@@ -37,9 +39,6 @@ export default class objClock {
     this.lightCriticalTimers = [];
     this.usedLights = [-1];
     this.freeLights = [];
-
-    this.lightShutoffTime = 45;
-    this.lightCriticalTime = 75;
 
     this.lights = this.scene.add.group();
 
@@ -130,10 +129,10 @@ export default class objClock {
   }
 
   startGame = () => {
-    for (let i=0; i<2; i++) {
+    for (let i=0; i<gameRules.numBulbsActive[this.level]; i++) {
       setTimeout(() => {
         this.toggleLight(this.getFreeLight(), lightState.on);
-      }, 500 + i*250 + intRandomRange(0, 500));
+      }, gameRules.bulbDelayTime[this.level][0] + i*250 + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
     }
   }
 
@@ -154,8 +153,8 @@ export default class objClock {
 
       case lightState.on:
         this.lights.getFirstNth(index+1, true).setTexture('sprLightOn');
-        this.lightShutoffTimers[index] = this.lightShutoffTime;
-        this.lightCriticalTimers[index] = this.lightCriticalTime;
+        this.lightShutoffTimers[index] = gameRules.bulbDeactivateTime;
+        this.lightCriticalTimers[index] = gameRules.bulbCriticalTime;
         break;
 
       case lightState.flash:
@@ -164,8 +163,8 @@ export default class objClock {
 
       case lightState.onSp:
         this.lights.getFirstNth(index+1, true).setTexture('sprLightOnSp');
-        this.lightShutoffTimers[index] = this.lightShutoffTime;
-        this.lightCriticalTimers[index] = this.lightCriticalTime;
+        this.lightShutoffTimers[index] = gameRules.bulbDeactivateTime;
+        this.lightCriticalTimers[index] = gameRules.bulbCriticalTime;
         break;
 
       case lightState.flashSp:
@@ -182,6 +181,7 @@ export default class objClock {
     for (let i=0; i<clockConfig.numLights; i++) {
 
       switch (this.lightStates[i]) {
+
       case lightState.off:
         continue;
 
@@ -205,8 +205,9 @@ export default class objClock {
 
       case lightState.flash:
       case lightState.flashSp:
-        meterDelta += 0.1;
+        meterDelta = gameRules.flashBulbDelta;
         break;
+
       }
 
       const _curAngle = (270+i*360/clockConfig.numLights) % 360;
@@ -217,19 +218,35 @@ export default class objClock {
 
           if (this.lightShutoffTimers[i] === 0) {
             if (this.lightStates[i] >= lightState.onSp) {
-              this.scene.meter.updateMeter(-52.1);
+              this.scene.meter.updateMeter(gameRules.spBulbDelta);
             }
 
             this.toggleLight(i, lightState.off);
-            this.scene.ui.updateScore(1);
             this.restockFreeLight();
 
+            // Score and Level Up
+            this.scene.ui.updateScore(1);
+            this.pointsToLevelUp--;
+
+            if (this.pointsToLevelUp <= 0) {
+              this.level = this.level < gameRules.numLevels ? this.level + 1 : this.level;
+              this.pointsToLevelUp = gameRules.pointsToLevelUp[this.level];
+
+              const _numNewLightsActive = gameRules.numBulbsActive[this.level] - gameRules.numBulbsActive[this.level-1];
+              for (let i = 0; i < _numNewLightsActive; i++) {
+                setTimeout(() => {
+                  this.toggleLight(this.getFreeLight(), lightState.on);
+                }, gameRules.bulbDelayTime[this.level][0] + i*250 + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
+              }
+            }
+
+            // Generate Special Bulb
             if (this.turnsUntilSp <= 0) {
-              this.turnsUntilSp = clockConfig.spDelay + intRandomRange(0, clockConfig.spDelay);
+              this.turnsUntilSp = gameRules.spBulbDelayTurns[this.level] + intRandomRange(0, gameRules.spBulbDelayTurns[this.level]);
 
               setTimeout(() => {
                 this.toggleLight(this.getFreeLight(), lightState.onSp);
-              }, 500 + intRandomRange(0, 500));
+              }, gameRules.bulbDelayTime[this.level][0] + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
             }
             
             else {
@@ -237,7 +254,7 @@ export default class objClock {
 
               setTimeout(() => {
                 this.toggleLight(this.getFreeLight(), lightState.on);
-              }, 500 + intRandomRange(0, 500));
+              }, gameRules.bulbDelayTime[this.level][0] + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
             }
           }
 

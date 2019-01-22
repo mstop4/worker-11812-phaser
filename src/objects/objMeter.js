@@ -27,7 +27,7 @@ export default class objMeter {
   }
 
   updateMeter = (delta) => {
-    this.actualProgress = Math.min(this.actualProgress  + delta, this.maxProgress);
+    this.actualProgress = Math.max(Math.min(this.actualProgress  + delta, this.maxProgress), 0);
     const _diff = this.actualProgress - this.progress;
 
     if (Math.abs(_diff) < 1) {
