@@ -29,7 +29,7 @@ export default class scnHowToPlay extends Phaser.Scene {
 
     this.add.image(appCenter.x - 108, 240, 'sprFigure1').setOrigin(0.5, 0.5);
 
-    this.add.text(appCenter.x + 8, 240, '2. Don\'t let the lights flash,\nthat will increase the\npressure meter.', {
+    this.add.text(appCenter.x + 8, 240, '2. Don\'t let the lights flash,\nthat will allow pressure\nto build up.', {
       fontFamily: 'Fondamento',
       fontSize: '36px', 
       fill: themes.light.textColour
