@@ -1,4 +1,5 @@
 const electron = require('electron');
+const path = require('path');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -10,7 +11,7 @@ app.on('ready', () => {
   });
 
   mainWindow.setMenu(null);
-  mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+  mainWindow.loadURL('file://' + path.join(__dirname, '../dist/index.html'));
 
   mainWindow.on('closed', () => {
     mainWindow = null;
