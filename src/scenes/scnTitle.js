@@ -50,10 +50,10 @@ export default class scnLoading extends Phaser.Scene {
       fill: themes.light.linkColour
     });
 
-    this.add.text(appWidth - 16, appHeight, `v.${version}`, {
+    this.add.text(appWidth, appHeight, `v.${version}`, {
       fontFamily: 'Fondamento',
       fontSize: '24px', 
-      fill: themes.light.linkColour
+      fill: themes.light.textColour
     }).setOrigin(1,1);
 
     setupButton(_start, () => {

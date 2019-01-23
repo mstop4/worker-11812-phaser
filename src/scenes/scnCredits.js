@@ -18,7 +18,7 @@ export default class scnGameOver extends Phaser.Scene {
     this.add.text(appCenter.x, appHeight * 0.075, 'Programming & Art: M.S.T.O.P.', {
       fontFamily: 'Fondamento',
       fontSize: '56px', 
-      fill: themes.dark.linkColour
+      fill: themes.dark.textColour
     }).setOrigin(0.5, 0);
 
     this.add.text(appCenter.x, appHeight * 0.23, 'Music:', {
