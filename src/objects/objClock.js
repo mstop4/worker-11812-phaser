@@ -29,7 +29,7 @@ export default class objClock {
 
     this.scene.add.image(x, y, 'sprClockBack');
     this.createLights();
-    this.createLabels();
+    //this.createLabels();
     this.createHands();
   }
 
@@ -96,37 +96,37 @@ export default class objClock {
     this.scene.children.bringToTop(this.hands[clockConfig.numHands-1]);
   }
 
-  createLabels = () => {
-    this.lightLabels = [];
+  // createLabels = () => {
+  //   this.lightLabels = [];
 
-    for (let i=0; i<clockConfig.numLights; i++) {
-      const _rad = (90-i*360/clockConfig.numLights) * (Math.PI / 180); 
-      const _offset_x = Math.cos(_rad) * clockConfig.labelRadius;
-      const _offset_y = -Math.sin(_rad) * clockConfig.labelRadius;
-      let _text;
+  //   for (let i=0; i<clockConfig.numLights; i++) {
+  //     const _rad = (90-i*360/clockConfig.numLights) * (Math.PI / 180); 
+  //     const _offset_x = Math.cos(_rad) * clockConfig.labelRadius;
+  //     const _offset_y = -Math.sin(_rad) * clockConfig.labelRadius;
+  //     let _text;
 
-      switch (i) {
-      case 0:
-        _text = 'II';
-        break;
-      case 1:
-        _text = 'III';
-        break;
-      case 45:
-        _text = 'I';
-        break;
-      default:
-        _text = i-1;
-      }
+  //     switch (i) {
+  //     case 0:
+  //       _text = 'II';
+  //       break;
+  //     case 1:
+  //       _text = 'III';
+  //       break;
+  //     case 45:
+  //       _text = 'I';
+  //       break;
+  //     default:
+  //       _text = i-1;
+  //     }
 
-      this.lightLabels[i] = this.scene.add.text(this.x + _offset_x, this.y + _offset_y, _text, {
-        fontFamily: 'Amarante',
-        fontSize: '20px', 
-        fill: '#000'
-      });
-      this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/clockConfig.numLights);
-    }
-  }
+  //     this.lightLabels[i] = this.scene.add.text(this.x + _offset_x, this.y + _offset_y, _text, {
+  //       fontFamily: 'Amarante',
+  //       fontSize: '20px', 
+  //       fill: '#000'
+  //     });
+  //     this.lightLabels[i].setOrigin(0.5, 0.5).setAngle(i*360/clockConfig.numLights);
+  //   }
+  // }
 
   startGame = () => {
     for (let i=0; i<gameRules.numBulbsActive[this.level]; i++) {
