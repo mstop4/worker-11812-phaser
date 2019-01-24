@@ -11,7 +11,7 @@ app.on('ready', () => {
   });
 
   mainWindow.setMenu(null);
-  mainWindow.loadURL('file://' + path.join(__dirname, '../dist/index.html'));
+  mainWindow.loadURL('file://' + path.join(__dirname, 'dist/index.html'));
 
   mainWindow.on('closed', () => {
     mainWindow = null;

@@ -10,8 +10,9 @@
   "scripts": {
     "build:dev": "webpack --mode=development",
     "build": "webpack --mode=production",
-    "electron": "electron electron/index.js",
+    "build:electron": "npm run build && rm -rf electron/dist && cp -rf dist electron/dist && electron-packager electron Worker-11812 --platform=darwin,win32,linux --arch=x64 --overwrite",
     "start": "webpack-dev-server --mode=development",
+    "start:electron": "electron electron/main.js",
     "lint": "npx eslint ./",
     "gh-pages": "npm run build && npx gh-pages -d dist"
   },
@@ -24,6 +25,7 @@
     "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "electron": "^4.0.2",
+    "electron-packager": "^13.0.1",
     "eslint": "^5.11.1",
     "gh-pages": "^2.0.1",
     "stats.js": "^0.17.0",
