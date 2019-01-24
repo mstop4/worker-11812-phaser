@@ -7,7 +7,8 @@ const BrowserWindow = electron.BrowserWindow;
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({
     width: 1280,
-    height: 750
+    height: 720,
+    useContentSize: true
   });
 
   mainWindow.setMenu(null);
