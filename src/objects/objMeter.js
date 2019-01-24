@@ -23,7 +23,7 @@ export default class objMeter {
     scene.add.image(x - 120, y - 56, 'sprZap2');
     scene.add.image(x + 120, y - 56, 'sprZap2').setScale(-1.0, 1.0);
     this.meterFront = scene.add.sprite(x + meterConfig.x, y + meterConfig.y, 'sprMeterFront1');
-    this.meterFront.setCrop(0, meterConfig.zeroPoint, 64, meterConfig.height);
+    this.meterFront.setCrop(0, meterConfig.zeroPoint, meterConfig.width, meterConfig.height);
   }
 
   updateMeter = (delta) => {
@@ -41,7 +41,7 @@ export default class objMeter {
       this.progress += _diff / 8;
     }
 
-    this.meterFront.setCrop(0, meterConfig.zeroPoint - this.progress, 64, meterConfig.height);
+    this.meterFront.setCrop(0, meterConfig.zeroPoint - this.progress, meterConfig.width, meterConfig.height);
 
     if (this.progress >= this.maxProgress && !this.scene.sceneOver) {
       this.scene.setGameOver();
