@@ -1,16 +1,11 @@
 import Phaser from 'phaser';
-import { appWidth, appHeight } from '../gameConfig';
+import { appCenter } from '../gameConfig';
 import { formatTime } from '../helpers/math';
 
 import objClock from '../objects/objClock';
 import objMeter from '../objects/objMeter';
 import objUI from '../objects/objUI';
 import objSteam from '../objects/objSimpleSteam';
-
-const center = { 
-  x: appWidth / 2,
-  y: appHeight / 2
-};
 
 const transitionTime = 1000;
 
@@ -27,8 +22,8 @@ export default class scnMain extends Phaser.Scene {
     
     this.sceneOver = false;
     this.AM = this.game.audioManager;
-    this.meter = new objMeter(this, 1080, center.y);
-    this.clock = new objClock(this, center.x - 120, center.y);
+    this.meter = new objMeter(this, 1080, appCenter.y);
+    this.clock = new objClock(this, appCenter.x - 120, appCenter.y);
     this.steam = new objSteam(this);
     this.ui = new objUI(this);
 
