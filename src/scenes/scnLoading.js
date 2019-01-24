@@ -103,7 +103,7 @@ export default class scnLoading extends Phaser.Scene {
 
     WebFont.load({      //eslint-disable-line no-undef
       google: {
-        families: ['Amarante', 'Fondamento']
+        families: ['Fondamento']
       },
 
       active: () => {
