@@ -32,14 +32,7 @@ export default class objMeter {
 
   update = () => {
     const _diff = this.actualProgress - this.progress;
-
-    if (Math.abs(_diff) < 1) {
-      this.progress = this.actualProgress;
-    }
-
-    else {
-      this.progress += _diff / 8;
-    }
+    this.progress = Math.abs(_diff) < 1 ? this.actualProgress : this.progress + _diff / 8;
 
     this.meterFront.setCrop(0, meterConfig.zeroPoint - this.progress, meterConfig.width, meterConfig.height);
 
