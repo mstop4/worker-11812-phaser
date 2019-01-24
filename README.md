@@ -4,7 +4,7 @@
 
 > *Father–! Father–! Will ten hours never end––??!!*
 
-A game made with *Phaser 3* inspired by the film *[Metropolis (1927)](https://en.wikipedia.org/wiki/Metropolis_(1927_film))* by Fritz Lang.
+A game made with *Phaser 3* inspired by the 1927 film *[Metropolis](https://en.wikipedia.org/wiki/Metropolis_(1927_film))* by Fritz Lang.
 
 Welcome, **Worker #11812**. You have been selected to regularly operate the paternoster machine during alternating 10-hour shifts. You instructions are as follows:
 
