@@ -1,15 +1,16 @@
 /// @desc  A lightweight version of objSteam that uses a tiled background instead of particles. Has the same interfaces as objSteam, making them easily swappable.
 
-import { appCenter, appWidth, appHeight } from '../gameConfig';
+import { appCenter, appWidth, appHeight, gameOverTime } from '../gameConfig';
 
 const cloudConfig = {
   xMax: 1279,
   yMax: 720,
   xSpeed: 1,
-  ySpeed: 0.5
+  ySpeed: 0.5,
+  shakeMargin: 32
 };
 
-const transitionTime = 1000;
+const shakeForce = 0.0075;
 
 export default class objSimpleSteam {
   constructor(scene) {
@@ -17,7 +18,7 @@ export default class objSimpleSteam {
     this.isSteaming = false;
     this.intensityThrottled = false;
 
-    this.clouds = scene.add.tileSprite(appCenter.x, appCenter.y, appWidth, appHeight, 'sprCloudBack');
+    this.clouds = scene.add.tileSprite(appCenter.x, appCenter.y, appWidth + cloudConfig.shakeMargin, appHeight + cloudConfig.shakeMargin, 'sprCloudBack');
     this.clouds.setVisible(false);
     this.setIntensity(0.0, true);
   }
@@ -48,7 +49,8 @@ export default class objSimpleSteam {
   }
 
   fadeOut = () => {
-    this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
+    this.scene.cameras.main.shake(gameOverTime - 1000, shakeForce);
+    this.scene.cameras.main.fadeOut(gameOverTime - 1000, 255, 255, 255);
   }
 
   update = () => {

@@ -216,7 +216,7 @@ export default class objClock {
         if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= clockConfig.handPointingThreshold) {
           this.lightShutoffTimers[i]--;
 
-          if (this.lightShutoffTimers[i] === 0) {
+          if (this.lightShutoffTimers[i] <= 0) {
             if (this.lightStates[i] >= lightState.onSp) {
               this.scene.meter.updateMeter(gameRules.spBulbDelta);
             }
@@ -233,7 +233,7 @@ export default class objClock {
               this.pointsToLevelUp = gameRules.pointsToLevelUp[this.level];
 
               const _numNewLightsActive = gameRules.numBulbsActive[this.level] - gameRules.numBulbsActive[this.level-1];
-              for (let i = 0; i < _numNewLightsActive; i++) {
+              for (let k = 0; k < _numNewLightsActive; k++) {
                 setTimeout(() => {
                   this.toggleLight(this.getFreeLight(), lightState.on);
                 }, gameRules.bulbDelayTime[this.level][0] + i*250 + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));

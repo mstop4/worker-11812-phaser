@@ -1,5 +1,5 @@
 module.exports = {
-  version: '1.0.2',
+  version: '1.1.0',
   appWidth: 1280,
   appHeight: 720,
 
@@ -20,6 +20,8 @@ module.exports = {
       hoverColour: '#FFF'
     }
   },
+
+  gameOverTime: 3000,
 
   gameRules: {
     flashBulbDelta: 0.2,

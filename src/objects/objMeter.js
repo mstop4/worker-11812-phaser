@@ -14,6 +14,8 @@ export default class objMeter {
     this.progress = 0;
     this.actualProgress = 0;
     this.maxProgress = meterConfig.zeroPoint - meterConfig.maxPoint;
+    // this.progress = this.maxProgress - 50;
+    // this.actualProgress = this.maxProgress - 50;
     this.isFlashing = false;
 
     scene.add.image(x, y + 13, 'sprMeterHalf');

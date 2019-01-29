@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { appCenter } from '../gameConfig';
+import { appCenter, gameOverTime } from '../gameConfig';
 import { formatTime } from '../helpers/math';
 
 import objClock from '../objects/objClock';
@@ -69,6 +69,6 @@ export default class scnMain extends Phaser.Scene {
     setTimeout(() => {
       this.AM.stopSound(this.AM.bgm);
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
-    }, 2500);
+    }, gameOverTime);
   }
 }

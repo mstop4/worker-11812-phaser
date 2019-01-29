@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight } from '../gameConfig';
+import { appCenter, appWidth, appHeight, gameOverTime } from '../gameConfig';
 
-const transitionTime = 1000;
+const shakeForce = 0.0075;
 
 const steamConfig = {
   minFreq: 500,
@@ -89,7 +89,8 @@ export default class objSteam {
   }
 
   fadeOut = () => {
-    this.scene.cameras.main.fadeOut(transitionTime, 255, 255, 255);
+    this.scene.cameras.main.shake(gameOverTime - 1000, shakeForce);
+    this.scene.cameras.main.fadeOut(gameOverTime - 1000, 255, 255, 255);
   }
 
   update = () => {}
