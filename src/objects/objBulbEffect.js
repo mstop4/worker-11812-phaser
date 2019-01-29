@@ -1,8 +1,8 @@
 const stayParticleConfig = {
   on: false,
   frequency: 250,
-  alpha: { start: 0.5, end: 0},
-  lifespan: 1000,
+  alpha: { start: 1, end: 0},
+  lifespan: 500,
   scale: {start: 0, end: 0.5},
   maxParticles: 5
 };
@@ -10,8 +10,8 @@ const stayParticleConfig = {
 const doneParticleConfig = {
   on: true,
   frequency: -1,
-  alpha: { start: 0.5, end: 0},
-  lifespan: 1000,
+  alpha: { start: 1, end: 0},
+  lifespan: 500,
   scale: {start: 0, end: 1}
 };
 
@@ -45,7 +45,6 @@ export default class objBulbEffect {
       if (!this.emitterStay[i].on) {
         this.emitterStay[i].setPosition(x, y);
         this.emitterStay[i].start();
-
         return i;
       }
     }
@@ -54,7 +53,7 @@ export default class objBulbEffect {
   }
 
   stopStayEmitter = (index) => {
-    if (index > 0 && index < max_emitters) {
+    if (index >= 0 && index < max_emitters) {
       this.emitterStay[index].stop();
       return -1;
     }

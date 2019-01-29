@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { angleDifference, intRandomRange } from '../helpers/math';
 import { gameRules } from '../gameConfig';
 
-import { objBulbEffect } from './objBulbEffect';
+import objBulbEffect from './objBulbEffect';
 
 const clockConfig = {
   lightRadius: 290,
@@ -33,7 +33,7 @@ export default class objClock {
     this.createLights();
     //this.createLabels();
     this.createHands();
-    this.bulbEffects = new objBulbEffect();
+    this.bulbEffects = new objBulbEffect(scene);
   }
 
   createLights = () => {
@@ -268,7 +268,7 @@ export default class objClock {
 
           else {
             if (this.lightEmitterIndex[i] === -1) {
-              this.bulbEffects.pulseDoneEmitter(_lightInst.x, _lightInst.y);
+              this.lightEmitterIndex[i] = this.bulbEffects.startStayEmitter(_lightInst.x, _lightInst.y);
             }
           }
 
@@ -276,7 +276,9 @@ export default class objClock {
         }
 
         else {
-          this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
+          if (!this.lightEmitterIndex[i] === -1) {
+            this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
+          }
         }
       }
     }
