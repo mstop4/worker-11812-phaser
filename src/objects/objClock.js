@@ -217,6 +217,7 @@ export default class objClock {
       }
 
       const _curAngle = (270+i*360/clockConfig.numLights) % 360;
+      let _has_hand = false;
 
       for (let j=0; j<clockConfig.numHands; j++) {
         if (Math.abs(angleDifference(this.handAngles[j], _curAngle)) <= clockConfig.handPointingThreshold) {
@@ -272,14 +273,13 @@ export default class objClock {
             }
           }
 
+          _has_hand = true;
           break;
         }
+      }
 
-        else {
-          if (this.lightEmitterIndex[i] != -1) {
-            this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
-          }
-        }
+      if (!_has_hand && this.lightEmitterIndex[i] != -1) {
+        this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
       }
     }
 
