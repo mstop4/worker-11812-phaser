@@ -14,7 +14,7 @@
   "scripts": {
     "build:dev": "webpack --mode=development",
     "build": "webpack --mode=production && rm -rf electron/dist && cp -rf dist electron/dist",
-    "genstats": "webpack --profile --json > stats.json",
+    "genstats": "webpack --profile --json > stats.json && mv stats.json dist/stats.json",
     "analyzebundle": "webpack-bundle-analyzer dist/stats.json",
     "build:electron-win": "electron-packager electron Worker-11812 --platform=win32 --arch=x64 --overwrite",
     "build:electron-mac": "electron-packager electron Worker-11812 --platform=darwin --arch=x64 --overwrite",
