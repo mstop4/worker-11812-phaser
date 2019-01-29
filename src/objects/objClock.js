@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import { angleDifference, intRandomRange } from '../helpers/math';
 import { gameRules } from '../gameConfig';
 
+import { objBulbEffect } from './objBulbEffect';
+
 const clockConfig = {
   lightRadius: 290,
   labelRadius: 325,
@@ -31,12 +33,14 @@ export default class objClock {
     this.createLights();
     //this.createLabels();
     this.createHands();
+    this.bulbEffects = new objBulbEffect();
   }
 
   createLights = () => {
     this.lightStates = [];
     this.lightShutoffTimers = [];
     this.lightCriticalTimers = [];
+    this.lightEmitterIndex = [];
     this.usedLights = [-1];
     this.freeLights = [];
 
@@ -54,6 +58,7 @@ export default class objClock {
       this.freeLights.push(i);
       this.lightShutoffTimers.push(-1);
       this.lightCriticalTimers.push(-1);
+      this.lightEmitterIndex.push(-1);
     }
   }
 
@@ -179,6 +184,7 @@ export default class objClock {
     let meterDelta = 0;
 
     for (let i=0; i<clockConfig.numLights; i++) {
+      const _lightInst = this.lights.getFirstNth(i+1, true);
 
       switch (this.lightStates[i]) {
 
@@ -223,6 +229,8 @@ export default class objClock {
 
             this.toggleLight(i, lightState.off);
             this.restockFreeLight();
+            this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
+            this.bulbEffects.pulseDoneEmitter(_lightInst.x, _lightInst.y);
 
             // Score and Level Up
             this.scene.ui.updateScore(1);
@@ -236,7 +244,7 @@ export default class objClock {
               for (let k = 0; k < _numNewLightsActive; k++) {
                 setTimeout(() => {
                   this.toggleLight(this.getFreeLight(), lightState.on);
-                }, gameRules.bulbDelayTime[this.level][0] + i*250 + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
+                }, gameRules.bulbDelayTime[this.level][0] + k*250 + intRandomRange(0, gameRules.bulbDelayTime[this.level][1]));
               }
             }
 
@@ -258,7 +266,17 @@ export default class objClock {
             }
           }
 
+          else {
+            if (this.lightEmitterIndex[i] === -1) {
+              this.bulbEffects.pulseDoneEmitter(_lightInst.x, _lightInst.y);
+            }
+          }
+
           break;
+        }
+
+        else {
+          this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
         }
       }
     }
@@ -284,17 +302,9 @@ export default class objClock {
   }
 
   destroy = () => {
-    this.lights.destroy();
     this.lights = null;
-
-    this.hands.forEach(hand => {
-      hand.destroy();
-      hand = null;
-    });
-
-    this.lightLabels.forEach(label => {
-      label.destroy();
-      label = null;
-    });
+    this.hands = null;
+    this.bulbEffects.destroy();
+    this.bulbEffects = null;
   }
 }
