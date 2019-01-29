@@ -7,13 +7,15 @@
   "author": "M.S.T.O.P.",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/mstop4/worker-11812-phaser.git"
+    "type": "git",
+    "url": "https://github.com/mstop4/worker-11812-phaser.git"
   },
   "sideEffects": false,
   "scripts": {
     "build:dev": "webpack --mode=development",
     "build": "webpack --mode=production && rm -rf electron/dist && cp -rf dist electron/dist",
+    "genstats": "webpack --profile --json > stats.json",
+    "analyzebundle": "webpack-bundle-analyzer dist/stats.json",
     "build:electron-win": "electron-packager electron Worker-11812 --platform=win32 --arch=x64 --overwrite",
     "build:electron-mac": "electron-packager electron Worker-11812 --platform=darwin --arch=x64 --overwrite",
     "build:electron-linux": "electron-packager electron Worker-11812 --platform=linux --arch=x64 --overwrite",
@@ -36,6 +38,7 @@
     "gh-pages": "^2.0.1",
     "stats.js": "^0.17.0",
     "webpack": "^4.28.4",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   },
