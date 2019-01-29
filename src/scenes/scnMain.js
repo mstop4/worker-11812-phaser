@@ -8,6 +8,7 @@ import objUI from '../objects/objUI';
 import objSteam from '../objects/objSimpleSteam';
 
 const transitionTime = 1000;
+const musicTrack = 'musMain';
 
 export default class scnMain extends Phaser.Scene {
 
@@ -27,8 +28,9 @@ export default class scnMain extends Phaser.Scene {
     this.steam = new objSteam(this);
     this.ui = new objUI(this);
 
-    this.AM.bgm = this.AM.playSound('musMain', true);
     this.bgmVolume = 1;
+    this.AM.playMusic(musicTrack, true);
+    this.AM.setVolume(musicTrack, this.bgmVolume);
 
     this.sys.game.events.on('hidden', () => {
       this.scene.sleep();
@@ -58,8 +60,8 @@ export default class scnMain extends Phaser.Scene {
 
     else {
       if (this.bgmVolume > 0) {
-        this.AM.setVolume(this.AM.bgm, this.bgmVolume);
-        this.bgmVolume = Math.max(0, this.bgmVolume - 1/(2*60));
+        this.AM.setVolume(musicTrack, this.bgmVolume);
+        this.bgmVolume = Math.max(0, this.bgmVolume - 1/(gameOverTime*0.06));
       }
     }
   }
@@ -67,7 +69,7 @@ export default class scnMain extends Phaser.Scene {
   setGameOver = () => {
     this.sceneOver = true;
     setTimeout(() => {
-      this.AM.stopSound(this.AM.bgm);
+      this.AM.stopMusic(musicTrack);
       this.scene.start('scnGameOver', {score: this.ui.score, time: formatTime(this.ui.time)});
     }, gameOverTime);
   }

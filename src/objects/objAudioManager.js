@@ -1,28 +1,23 @@
 export default class objAudioManager {
   constructor(audioManager) {
     this.audioManager = audioManager;
-    this.bgm = null;
+    this.trackList = {
+      musMain: audioManager.add('musMain'),
+      musTitle: audioManager.add('musTitle')
+    };
   }
 
-  playSound = (sound, loop) => {
-    const _soundRef = this.audioManager.add(sound);
-    _soundRef.play('', {
+  playMusic = (music, loop) => {
+    this.trackList[music].play('', {
       loop: loop
     });
-    return _soundRef;
   }
 
-  stopSound = (ref) => {
-    if (ref !== null) {
-      ref.stop();
-      ref.destroy();
-      ref = null;
-    }
+  stopMusic = (music) => {
+    this.trackList[music].stop();
   }
 
-  setVolume = (ref, volume) => {
-    if (ref) {
-      ref.setVolume(volume);
-    }
+  setVolume = (music, volume) => {
+    this.trackList[music].setVolume(volume);
   }
 }

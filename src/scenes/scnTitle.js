@@ -5,6 +5,7 @@ import objSteam from '../objects/objSimpleSteam';
 
 const startTransitionTime = 1000;
 const subMenuTransitionTime = 500;
+const musicTrack = 'musTitle';
 
 export default class scnLoading extends Phaser.Scene {
   constructor() {
@@ -22,8 +23,9 @@ export default class scnLoading extends Phaser.Scene {
     this.steam.setIntensity(0.5, true);
     this.bgmVolume = 1;
 
-    if (this.AM.bgm === null) {
-      this.AM.bgm = this.AM.playSound('musTitle', true);
+    if (!this.AM.trackList[musicTrack].isPlaying) {
+      this.AM.playMusic(musicTrack, true);
+      this.AM.setVolume(musicTrack, this.bgmVolume);
     }
 
     this.add.text(appCenter.x, appHeight * 0.25, 'Worker #11812', {
@@ -101,7 +103,7 @@ export default class scnLoading extends Phaser.Scene {
 
     if (this.sceneOver) {
       if (this.bgmVolume > 0) {
-        this.AM.setVolume(this.AM.bgm, this.bgmVolume);
+        this.AM.setVolume(musicTrack, this.bgmVolume);
         this.bgmVolume = Math.max(0, this.bgmVolume - 1/60);
       }
     }
@@ -109,7 +111,7 @@ export default class scnLoading extends Phaser.Scene {
 
   destroy = () => {
     if (this.sceneOver) {
-      this.AM.stopSound(this.AM.bgm);
+      this.AM.stopMusic(musicTrack);
     }
     this.steam = null;
   }
