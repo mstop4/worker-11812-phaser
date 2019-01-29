@@ -276,7 +276,7 @@ export default class objClock {
         }
 
         else {
-          if (!this.lightEmitterIndex[i] === -1) {
+          if (this.lightEmitterIndex[i] != -1) {
             this.lightEmitterIndex[i] = this.bulbEffects.stopStayEmitter(this.lightEmitterIndex[i]);
           }
         }
