@@ -7,7 +7,8 @@ const cloudConfig = {
   yMax: 720,
   xSpeed: 1,
   ySpeed: 0.5,
-  shakeMargin: 32
+  shakeMargin: 32,
+  throttleInterval: 125
 };
 
 const shakeForce = 0.0075;
@@ -33,7 +34,7 @@ export default class objSimpleSteam {
         this.clouds.setAlpha(intensity);
 
         this.intensityThrottled = true;
-        setTimeout(() => this.intensityThrottled = false, 250);
+        setTimeout(() => this.intensityThrottled = false, cloudConfig.throttleInterval);
       }
     }
   }

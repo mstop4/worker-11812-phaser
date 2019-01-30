@@ -9,7 +9,7 @@ const steamConfig = {
   gameOverFreq: 1000/30,
   maxAlpha: 0.375,
   gameOverAlpha: 0.75,
-  throttleInterval: 250
+  throttleInterval: 125
 };
 
 export default class objSteam {
