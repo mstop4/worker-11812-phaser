@@ -30,6 +30,7 @@ export default class objClock {
     this.pointsToLevelUp = gameRules.pointsToLevelUp[this.level];
 
     this.scene.add.image(x, y, 'sprClockBack');
+    this.face = this.scene.add.image(x, y, 'sprClockNumbers');
     this.createLights();
     //this.createLabels();
     this.createHands();

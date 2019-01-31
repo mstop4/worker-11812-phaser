@@ -21,6 +21,9 @@ export default class objSimpleSteam {
 
     this.clouds = scene.add.tileSprite(appCenter.x, appCenter.y, appWidth + cloudConfig.shakeMargin, appHeight + cloudConfig.shakeMargin, 'sprCloudBack');
     this.clouds.setVisible(false);
+    if (this.scene.clock) {
+      this.scene.clock.face.setVisible(false);
+    }
     this.setIntensity(0.0, true);
   }
 
@@ -28,10 +31,16 @@ export default class objSimpleSteam {
     if (!this.intensityThrottled || force) {
       if (intensity === -1) {
         this.clouds.setAlpha(1.0);
+        if (this.scene.clock) {
+          this.scene.clock.face.setAlpha(1.0);
+        }
       } 
       
       else {
         this.clouds.setAlpha(intensity);
+        if (this.scene.clock) {
+          this.scene.clock.face.setAlpha(intensity);
+        }
 
         this.intensityThrottled = true;
         setTimeout(() => this.intensityThrottled = false, cloudConfig.throttleInterval);
@@ -41,11 +50,17 @@ export default class objSimpleSteam {
 
   startSteam = () => {
     this.clouds.setVisible(true);
+    if (this.scene.clock) {
+      this.scene.clock.face.setVisible(true);
+    }
     this.isSteaming = true;
   }
 
   stopSteam = () => {
-    this.clouds.setVisible(false);   
+    this.clouds.setVisible(false); 
+    if (this.scene.clock) {
+      this.scene.clock.face.setVisible(false);
+    }  
     this.isSteaming = false;
   }
 

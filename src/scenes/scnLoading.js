@@ -19,6 +19,7 @@ export default class scnLoading extends Phaser.Scene {
     }).setOrigin(0.5, 0.5);
 
     this.load.image('sprClockBack', 'assets/sprites/back.png');
+    this.load.image('sprClockNumbers', 'assets/sprites/backdark.png');
     this.load.image('sprLightOff', 'assets/sprites/lightOff.png');
     this.load.image('sprLightOffSp', 'assets/sprites/lightOffSp.png');
     this.load.image('sprLightOn', 'assets/sprites/lightOn.png');
