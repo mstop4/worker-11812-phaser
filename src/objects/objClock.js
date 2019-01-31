@@ -63,7 +63,7 @@ export default class objClock {
   }
 
   createHands = () => {
-    this.handAngles = [0, 90, 180];
+    this.handAngles = [0, 94, 172];
     this.hands = [];
 
     const _collisonArea = new Phaser.Geom.Rectangle(0, -15, 280, 49);
