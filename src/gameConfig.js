@@ -73,5 +73,12 @@ module.exports = {
       10,
       10
     ]
-  }
+  },
+
+  endQuotes: [
+    '"Moloch!"',
+    '"Such accidents are unavoidable."',
+    '"It was their hands that built\nthis city of ours, father"',
+    '"Father–! Father–!\nWill ten hours never end––??!!"'
+  ]
 };

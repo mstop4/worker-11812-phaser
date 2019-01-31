@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
-import { appCenter, appWidth, appHeight, themes } from '../gameConfig';
+import { appCenter, appWidth, appHeight, themes, endQuotes } from '../gameConfig';
 import { setupButton } from '../helpers/button';
+import { intRandomRange } from '../helpers/math';
 
 const transitionTime = 1000;
 
@@ -22,9 +23,20 @@ export default class scnGameOver extends Phaser.Scene {
     this.canClick = false;
     this.startInputTimeout = setTimeout(() => this.canClick = true, transitionTime);
 
-    this.add.text(appCenter.x, appHeight * 0.225, 'The End', {
+    const quoteIndex = intRandomRange(0, endQuotes.length-1);
+    let fontSize;
+
+    if (quoteIndex === 0) {
+      fontSize = '128px';
+    }
+
+    else {
+      fontSize = '56px';
+    }
+
+    this.add.text(appCenter.x, appHeight * 0.225, endQuotes[quoteIndex], {
       fontFamily: 'Fondamento',
-      fontSize: '128px', 
+      fontSize: fontSize, 
       fill: themes.dark.textColour
     }).setOrigin(0.5, 0.5);
 
