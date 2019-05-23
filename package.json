@@ -38,7 +38,6 @@
     "gh-pages": "^2.0.1",
     "stats.js": "^0.17.0",
     "webpack": "^4.28.4",
-    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   },
