@@ -56,6 +56,7 @@ module.exports = {
       { from: './src/assets/audio', to: 'assets/audio'},
       { from: './src/index.html', to: 'index.html'},
       { from: './src/index.css', to: 'index.css'},
+      { from: './src/favicon.ico', to: 'favicon.ico'},
     ]),
   ],
 
